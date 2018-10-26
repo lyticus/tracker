@@ -10,7 +10,7 @@ It does so by providing a uniform abstraction layer which serves as a facade for
 
 ## Supported clients
 
-- Segment
+- Segment (analytics.js)
 
 ## Installation
 
