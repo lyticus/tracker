@@ -2,6 +2,10 @@
 
 > Generic wrapper for analytics clients.
 
+## Supported clients
+
+- Segment
+
 ## Installation
 
 ```bash
