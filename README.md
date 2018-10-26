@@ -38,9 +38,9 @@ const lyticus = new Lyticus('segment', () => window.analytics);
 
 ### track
 
-Tracks an event.
+Parameter(s): _type, name, properties_
 
-Parameter(s): type, name, properties
+Tracks an event.
 
 #### Example
 
@@ -50,9 +50,9 @@ lyticus.track('click', 'green-button', { text: 'Hello, World!' });
 
 ### page
 
-Tracks a page view.
+Parameter(s): _name_
 
-Parameter(s): name
+Tracks a page view.
 
 #### Example
 
@@ -61,6 +61,8 @@ lyticus.page('About');
 ```
 
 ### addDocumentTracker
+
+Parameter(s): _event type, selector strings_
 
 Adds a listener to the document for a specified type of browser event.
 
@@ -75,8 +77,6 @@ The created track event will have the following values:
 Events without a name will not be tracked.
 
 The "data-track-ignore" attribute can be used to skip the creation of a track event.
-
-Parameter(s): event type, selector strings
 
 #### Example
 
