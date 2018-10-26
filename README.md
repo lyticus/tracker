@@ -1,6 +1,12 @@
 # lyticus
 
-> Generic wrapper for analytics clients.
+> Analytics client facade.
+
+## About
+
+Lyticus' mission is to prevent analytics client vendor lock-in.
+
+It does so by providing a uniform abstraction layer which serves as a facade for a supported analytics client.
 
 ## Supported clients
 
