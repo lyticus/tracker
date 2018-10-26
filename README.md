@@ -62,16 +62,16 @@ lyticus.page('About');
 
 ### addDocumentTracker
 
-Adds a listener to the document for a specified browser event type targeting a specified set of tag names.
+Adds a listener to the document for a specified browser event type targeting elements matching at least one of the specified selector strings.
 
 Lyticus will create a corresponding analytics event with a type matching the browser event. The event will be named after the id of the targeted element. "data-track-name" and "data-track-properties" can be used to change the analytics event values. "data-track-ignore" can be used to ingore the skip the creation of the analytics event.
 
-Parameter(s): event type, tag names
+Parameter(s): event type, selector strings
 
 #### Example
 
 ```javascript
-lyticus.addDocumentTracker('click', ['A', 'BUTTON']);
+lyticus.addDocumentTracker('click', ['a', 'button']);
 ```
 
 ```html
