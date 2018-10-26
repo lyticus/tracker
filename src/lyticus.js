@@ -1,13 +1,16 @@
 export default function Lyticus(clientName, clientProvider) {
-  return {
-    track(type, name, properties) {
-      switch (clientName) {
-        case 'segment':
+  switch (clientName) {
+    case 'segment':
+      return {
+        page(name) {
+          clientProvider().page(name);
+        },
+        track(type, name, properties) {
           clientProvider().track(`${type}--${name}`, properties);
-          break;
-        default:
-          throw new Error('Method not supported');
-      }
-    }
-  };
+        }
+      };
+
+    default:
+      throw new Error('Client not supported');
+  }
 }

@@ -21,12 +21,14 @@ import Lyticus from 'lyticus';
 const lyticus = new Lyticus('segment', () => window.analytics);
 
 lyticus.track('click', 'green-button', { text: 'Hello, World!' });
+
+lyticus.page('About');
 ```
 
 ## Powered by
 
-* Babel
-* Webpack 4
+- Babel
+- Webpack 4
 
 ## License
 
