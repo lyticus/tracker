@@ -4,7 +4,7 @@
 
 ## About
 
-> *Lutikos (Greek) - Able to loosen*
+*Lutikos (Greek) - Able to loosen*
 
 Lyticus' mission is to prevent analytics client vendor lock-in.
 
