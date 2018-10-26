@@ -1,7 +1,13 @@
-export default function Lyticus() {
+export default function Lyticus(clientName, clientInstance) {
   return {
-    track(type, name, payload) {
-      console.log('tracked', type, name, payload);
+    track(type, name, properties) {
+      switch (clientName) {
+        case 'segment':
+          clientInstance.track(`${type}--${name}`, properties);
+          break;
+        default:
+          throw new Error('Method not supported');
+      }
     }
   };
 }
