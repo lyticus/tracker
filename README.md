@@ -6,7 +6,9 @@
 
 Lyticus' mission is to prevent analytics client vendor lock-in.
 
-It does so by providing a uniform abstraction layer which serves as a facade for a supported analytics client.
+It does so by providing an open-source uniform abstraction layer which serves as a facade for a supported analytics client.
+
+Lyticus maintly targets JavaScript Single-Page Applications (SPAs).
 
 ## Supported clients
 
