@@ -68,6 +68,45 @@ Parameter(s): event type, tag names
 lyticus.addDocumentTracker('click', ['A', 'BUTTON']);
 ```
 
+```html
+<!--
+Clicking this will create a track event with the following values:
+    - type: 'click'
+    - name: 'the-button'
+    - properties: null
+-->
+<button id="the-button">
+    Click me
+</button>
+
+<!--
+Clicking this will create a track event with the following values:
+    - type: 'click'
+    - name: 'another-button'
+    - properties: '{ color: blue }'
+-->
+<button id="the-button" data-track-name="another-button" data-track-properties="{ color: blue }">
+    Click me
+</button>
+
+<!--
+Clicking this will create a track event with the following values:
+    - type: 'click'
+    - name: 'the-link'
+    - properties: null
+-->
+<a href="https://www.google.com" id="the-link">
+    Click me
+</a>
+
+<!--
+Clicking this will not create a track event.
+-->
+<a href="https://www.google.com" id="the-link" data-track-ignore="true">
+    Click me
+</a>
+```
+
 ## Powered by
 
 - Babel 7
