@@ -1,9 +1,9 @@
-export default function Lyticus(clientName, clientInstance) {
+export default function Lyticus(clientName, clientProvider) {
   return {
     track(type, name, properties) {
       switch (clientName) {
         case 'segment':
-          clientInstance.track(`${type}--${name}`, properties);
+          clientProvider().track(`${type}--${name}`, properties);
           break;
         default:
           throw new Error('Method not supported');
