@@ -10,6 +10,15 @@ npm install --save lyticus
 
 [npm package link](https://www.npmjs.com/package/lyticus)
 
+## Setup & example
+
+```javascript
+import Lyticus from 'lyticus';
+const lyticus = new Lyticus('segment', () => window.analytics);
+
+lyticus.track('click', 'green-button', { text: 'Hello, World!' });
+```
+
 ## Powered by
 
 * Babel
