@@ -42,6 +42,8 @@ Tracks an event.
 
 Parameter(s): type, name, properties
 
+#### Example
+
 ```javascript
 lyticus.track('click', 'green-button', { text: 'Hello, World!' });
 ```
@@ -51,6 +53,8 @@ lyticus.track('click', 'green-button', { text: 'Hello, World!' });
 Tracks a page view.
 
 Parameter(s): name
+
+#### Example
 
 ```javascript
 lyticus.page('About');
@@ -63,6 +67,8 @@ Adds a listener to the document for a specified browser event type targeting a s
 Lyticus will create a corresponding analytics event with a type matching the browser event. The event will be named after the id of the targeted element. "data-track-name" and "data-track-properties" can be used to change the analytics event values. "data-track-ignore" can be used to ingore the skip the creation of the analytics event.
 
 Parameter(s): event type, tag names
+
+#### Example
 
 ```javascript
 lyticus.addDocumentTracker('click', ['A', 'BUTTON']);
