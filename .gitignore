@@ -1,3 +1,7 @@
+# Local files
+
+*.local.*
+
 # Editor directories and files
 .vscode
 .idea
