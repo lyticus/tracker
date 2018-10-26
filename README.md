@@ -1,6 +1,6 @@
 # lyticus
 
-> Analytics client.
+> Generic wrapper for analytics clients.
 
 ## Installation
 
