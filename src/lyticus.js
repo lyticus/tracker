@@ -43,7 +43,7 @@ export default function Lyticus(clientName, clientProvider) {
                   properties = propertiesAttribute.value;
                 }
               }
-              if (event) {
+              if (name) {
                 track(eventType, name, properties);
               }
               break;
