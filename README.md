@@ -71,8 +71,8 @@ lyticus.addDocumentTracker('click', ['A', 'BUTTON']);
 ```html
 <!--
 Clicking this will create a track event with the following values:
-    - type: 'click'
-    - name: 'the-button'
+    - type: "click"
+    - name: "the-button"
     - properties: null
 -->
 <button id="the-button">
@@ -81,18 +81,18 @@ Clicking this will create a track event with the following values:
 
 <!--
 Clicking this will create a track event with the following values:
-    - type: 'click'
-    - name: 'another-button'
-    - properties: '{ color: blue }'
+    - type: "click"
+    - name: "another-button"
+    - properties: "{ color: 'blue' }"
 -->
-<button id="the-button" data-track-name="another-button" data-track-properties="{ color: blue }">
+<button id="the-button" data-track-name="another-button" data-track-properties="{ color: 'blue' }">
     Click me
 </button>
 
 <!--
 Clicking this will create a track event with the following values:
-    - type: 'click'
-    - name: 'the-link'
+    - type: "click"
+    - name: "the-link"
     - properties: null
 -->
 <a href="https://www.google.com" id="the-link">
