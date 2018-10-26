@@ -1,14 +1,17 @@
 {
   "name": "lyticus",
   "version": "0.0.0",
-  "description": "",
+  "description": "Analytics client",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack --mode production --progress"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Botre/lyticus.git"
+  },
+  "author": "Bjorn Krols",
+  "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-loader": "^8.0.4",
