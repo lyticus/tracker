@@ -4,13 +4,13 @@
 
 ## About
 
+> *Lutikos (Greek) - Able to loosen*
+
 Lyticus' mission is to prevent analytics client vendor lock-in.
 
 It does so by providing an open-source uniform abstraction layer which serves as a facade for a supported analytics client.
 
 Lyticus maintly targets JavaScript Single-Page Applications (SPAs).
-
-*Lutikos (Greek) - Able to loosen*
 
 ## Supported clients
 
