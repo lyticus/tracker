@@ -9,7 +9,6 @@ export default function Lyticus(clientName, clientProvider) {
           clientProvider().track(`${type}--${name}`, properties);
         }
       };
-
     default:
       throw new Error('Client not supported');
   }
