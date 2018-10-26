@@ -2,7 +2,7 @@
   "name": "lyticus",
   "version": "0.0.0",
   "description": "Generic wrapper for analytics clients",
-  "main": "index.js",
+  "main": "dist/lyticus.js",
   "scripts": {
     "build": "webpack --mode production --progress"
   },
