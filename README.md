@@ -10,6 +10,8 @@ It does so by providing an open-source uniform abstraction layer which serves as
 
 Lyticus maintly targets JavaScript Single-Page Applications (SPAs).
 
+*Lutikos (Greek) - Able to loosen*
+
 ## Supported clients
 
 - Segment (analytics.js)
