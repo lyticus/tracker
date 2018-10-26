@@ -56,7 +56,7 @@ lyticus.page('About');
 
 ## Powered by
 
-- Babel
+- Babel 7
 - Webpack 4
 
 ## License
