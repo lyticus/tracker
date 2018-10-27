@@ -1,6 +1,6 @@
 # lyticus
 
-> Analytics client facade.
+> Analytics client facade
 
 ## About
 
