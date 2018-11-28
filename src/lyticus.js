@@ -1,6 +1,9 @@
 export default function Lyticus(clientName, clientProvider) {
   switch (clientName) {
-    case 'segment':
+    case "segment":
+      const identify = ({ userId = undefined, traits }) => {
+        clientProvider().identify(userId, traits);
+      };
       const page = name => {
         clientProvider().page(name);
       };
@@ -23,21 +26,21 @@ export default function Lyticus(clientName, clientProvider) {
               if (target.attributes) {
                 // -- Ignore
                 const ingoreAttribute = target.attributes.getNamedItem(
-                  'data-track-ignore'
+                  "data-track-ignore"
                 );
                 if (ingoreAttribute) {
                   return;
                 }
                 // -- Name
                 const nameAttribute = target.attributes.getNamedItem(
-                  'data-track-name'
+                  "data-track-name"
                 );
                 if (nameAttribute) {
                   name = nameAttribute.value;
                 }
                 // -- Properties
                 const propertiesAttribute = target.attributes.getNamedItem(
-                  'data-track-properties'
+                  "data-track-properties"
                 );
                 if (propertiesAttribute) {
                   properties = propertiesAttribute.value;
@@ -52,11 +55,12 @@ export default function Lyticus(clientName, clientProvider) {
         });
       };
       return {
+        identify,
         page,
         track,
         addDocumentTracker
       };
     default:
-      throw new Error('Client not supported');
+      throw new Error("Client not supported");
   }
 }

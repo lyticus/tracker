@@ -4,7 +4,7 @@
 
 ## About
 
-*Lutikos (Greek) - Able to loosen*
+_Lutikos (Greek) - Able to loosen_
 
 Lyticus' mission is to prevent analytics client vendor lock-in.
 
@@ -32,11 +32,21 @@ npm install --save lyticus
 2. Import Lyticus
 
 ```javascript
-import Lyticus from 'lyticus';
-const lyticus = new Lyticus('segment', () => window.analytics);
+import Lyticus from "lyticus";
+const lyticus = new Lyticus("segment", () => window.analytics);
 ```
 
 ## Methods
+
+### identify
+
+Associates a users and their actions to a recognizable userId and traits.
+
+#### Example
+
+```javascript
+lyticus.identify({ userId: "abcde", traits: { subscribed: true } });
+```
 
 ### track
 
@@ -47,7 +57,7 @@ Tracks an event.
 #### Example
 
 ```javascript
-lyticus.track('click', 'green-button', { text: 'Hello, World!' });
+lyticus.track("click", "green-button", { text: "Hello, World!" });
 ```
 
 ### page
@@ -59,7 +69,7 @@ Tracks a page view.
 #### Example
 
 ```javascript
-lyticus.page('About');
+lyticus.page("About");
 ```
 
 ### addDocumentTracker
@@ -83,45 +93,43 @@ The "data-track-ignore" attribute can be used to skip the creation of a track ev
 #### Example
 
 ```javascript
-lyticus.addDocumentTracker('click', ['a', 'button']);
+lyticus.addDocumentTracker("click", ["a", "button"]);
 ```
 
 ```html
 <!--
-Clicking this will create a track event with the following values:
-    - type: "click"
-    - name: "the-button"
-    - properties: null
+  Clicking this will create a track event with the following values:
+      - type: "click"
+      - name: "the-button"
+      - properties: null
 -->
-<button id="the-button">
-    Click me
+<button id="the-button">Click me</button>
+
+<!--
+  Clicking this will create a track event with the following values:
+      - type: "click"
+      - name: "another-button"
+      - properties: "{ color: 'blue' }"
+-->
+<button
+  id="the-button"
+  data-track-name="another-button"
+  data-track-properties="{ color: 'blue' }"
+>
+  Click me
 </button>
 
 <!--
-Clicking this will create a track event with the following values:
-    - type: "click"
-    - name: "another-button"
-    - properties: "{ color: 'blue' }"
+  Clicking this will create a track event with the following values:
+      - type: "click"
+      - name: "the-link"
+      - properties: null
 -->
-<button id="the-button" data-track-name="another-button" data-track-properties="{ color: 'blue' }">
-    Click me
-</button>
+<a href="https://www.google.com" id="the-link"> Click me </a>
 
-<!--
-Clicking this will create a track event with the following values:
-    - type: "click"
-    - name: "the-link"
-    - properties: null
--->
-<a href="https://www.google.com" id="the-link">
-    Click me
-</a>
-
-<!--
-Clicking this will not create a track event.
--->
+<!-- Clicking this will not create a track event. -->
 <a href="https://www.google.com" id="the-link" data-track-ignore="true">
-    Click me
+  Click me
 </a>
 ```
 
