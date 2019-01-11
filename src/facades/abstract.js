@@ -1,9 +1,10 @@
 export default class AbstractFacade {
-  constructor(clientProvider) {
+  constructor(clientProvider, configuration) {
     if (new.target === AbstractFacade) {
       throw new TypeError("Abstract constructor");
     }
     this.clientProvider = clientProvider;
+    this.configuration  = configuration;
   }
   identify() {
     throw new Error("Must override abstract method");

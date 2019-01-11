@@ -1,8 +1,8 @@
 import AbstractFacade from "./abstract";
 
 export default class SegmentFacade extends AbstractFacade {
-  constructor(clientProvider) {
-    super(clientProvider);
+  constructor(clientProvider, configuration) {
+    super(clientProvider, configuration);
   }
   identify({ userId = undefined, traits }) {
     this.clientProvider().identify(userId, traits);

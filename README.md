@@ -14,6 +14,7 @@ Lyticus maintly targets JavaScript Single-Page Applications (SPAs).
 
 ## Supported clients
 
+- Google Analytics (gtag.js)
 - Segment (analytics.js)
 
 ## Installation
@@ -25,6 +26,18 @@ npm install --save lyticus
 [npm package link](https://www.npmjs.com/package/lyticus)
 
 ## Setup
+
+### Google Analytics
+
+1. Install the [gtag.js snippet](https://developers.google.com/analytics/devguides/collection/gtagjs/)
+2. Import Lyticus
+
+```javascript
+import Lyticus from "lyticus";
+const lyticus = new Lyticus("google-analytics", () => window.gtag, {
+  trackingId: "UA-XXXXXXXXX-X"
+});
+```
 
 ### Segment
 
