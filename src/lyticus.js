@@ -1,7 +1,9 @@
+import SegmentFacade from "./facades/segment";
+
 export default function Lyticus(clientName, clientProvider) {
   switch (clientName) {
     case "segment":
-      return require("./facades/segment")(clientProvider);
+      return new SegmentFacade(clientProvider);
     default:
       throw new Error("Client not supported");
   }
