@@ -18,5 +18,9 @@
     "babel-loader": "^8.0.5",
     "webpack": "^4.28.4",
     "webpack-cli": "^3.2.1"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "nanoid": "^2.0.1"
   }
 }

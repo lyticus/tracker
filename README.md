@@ -74,7 +74,7 @@ Lyticus will create a track event every time such browser event targets an eleme
 The created track event will have the following values:
 
 - type: the type of the browser event
-- value: the id of the element or the value of the "data-track-name" attribute
+- value: the id of the element or the value of the "data-track-value" attribute
 
 Events without a name will not be tracked.
 
@@ -84,27 +84,6 @@ The "data-track-ignore" attribute can be used to skip the creation of a track ev
 
 ```javascript
 lyticus.addDocumentTracker("click", ["a", "button"]);
-```
-
-```html
-<!--
-  Clicking this will create a track event with the following values:
-      - type: "click"
-      - name: "the-button"
--->
-<button id="the-button">Click me</button>
-
-<!--
-  Clicking this will create a track event with the following values:
-      - type: "click"
-      - name: "the-link"
--->
-<a href="https://www.google.com" id="the-link"> Click me </a>
-
-<!-- Clicking this will not create a track event. -->
-<a href="https://www.google.com" id="the-link" data-track-ignore="true">
-  Click me
-</a>
 ```
 
 ## Powered by
