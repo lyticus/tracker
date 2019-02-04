@@ -16,9 +16,22 @@ npm install --save lyticus
 
 ## Setup
 
+### Via NPM
+
 ```javascript
 import Lyticus from "lyticus";
 const lyticus = new Lyticus("your-tracking-id");
+```
+
+### Via CDN
+
+```html
+<script src="https://unpkg.com/lyticus"></script>
+<script>
+  var Lyticus = window.lyticus.default;
+  var lyticus = new Lyticus("your-tracking-id");
+  lyticus.trackPage();
+</script>
 ```
 
 ## Methods
