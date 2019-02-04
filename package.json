@@ -1,7 +1,7 @@
 {
   "name": "lyticus",
   "version": "0.0.13",
-  "description": "Analytics client facade",
+  "description": "Analytics client",
   "main": "dist/lyticus.js",
   "scripts": {
     "build": "webpack --mode production --progress"
