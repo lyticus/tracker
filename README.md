@@ -28,7 +28,6 @@ const lyticus = new Lyticus("your-tracking-id");
 ```html
 <script src="https://unpkg.com/lyticus"></script>
 <script>
-  var Lyticus = window.lyticus.default;
   var lyticus = new Lyticus("your-tracking-id");
   lyticus.trackPage();
 </script>

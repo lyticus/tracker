@@ -7,10 +7,13 @@
     <title>Document</title>
     <script src="https://unpkg.com/lyticus"></script>
     <script>
-      var Lyticus = window.lyticus.default;
-      var lyticus = new Lyticus("your-tracking-id");
+      var lyticus = new Lyticus("your-tracking-id", {
+        development: true
+      });
       lyticus.trackPage();
     </script>
   </head>
-  <body></body>
+  <body>
+    Open browser console to view event.
+  </body>
 </html>
