@@ -22,7 +22,7 @@ export default class Lyticus {
     }
   }
   trackNavigator() {
-    track({
+    this.track({
       type: "navigator",
       screenWidth: window.innerWidth,
       language: window.navigator.language,
@@ -30,21 +30,21 @@ export default class Lyticus {
     });
   }
   trackPage() {
-    track({
+    this.track({
       type: "page",
       path: window.location.pathname,
       referer: document.referrer
     });
   }
   trackClick(value) {
-    track({
+    this.track({
       type: "click",
       path: window.location.pathname,
       value: value
     });
   }
   trackOutboundClick(value, url) {
-    track(
+    this.track(
       {
         type: "click",
         path: window.location.pathname,
@@ -86,7 +86,7 @@ export default class Lyticus {
             }
           }
           if (value) {
-            track(eventType, {
+            this.track(eventType, {
               value: value
             });
           }
