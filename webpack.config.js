@@ -1,12 +1,12 @@
-const path = require('path');
+const path = require("path");
 
 module.exports = {
-  entry: path.resolve(__dirname + '/src/lyticus.js'),
+  entry: path.resolve(__dirname + "/src/lyticus.js"),
   output: {
-    path: path.resolve(__dirname + '/dist/'),
-    filename: 'lyticus.js',
-    library: 'lyticus',
-    libraryTarget: 'umd',
+    path: path.resolve(__dirname + "/dist/"),
+    filename: "lyticus.js",
+    library: "lyticus",
+    libraryTarget: "umd",
     umdNamedDefine: true
   },
   module: {
@@ -15,7 +15,7 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader'
+          loader: "babel-loader"
         }
       }
     ]
