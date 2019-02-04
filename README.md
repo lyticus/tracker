@@ -1,21 +1,10 @@
 # lyticus
 
-> Analytics client facade
+> Analytics client
 
 ## About
 
-_Lutikos (Greek) - Able to loosen_
-
-Lyticus' mission is to prevent analytics client vendor lock-in.
-
-It does so by providing an open-source uniform abstraction layer which serves as a facade for a supported analytics client.
-
-Lyticus maintly targets JavaScript Single-Page Applications (SPAs).
-
-## Supported clients
-
-- Google Analytics (gtag.js)
-- Segment (analytics.js)
+Lyticus mainty targets JavaScript Single-Page Applications (SPAs).
 
 ## Installation
 
@@ -27,62 +16,51 @@ npm install --save lyticus
 
 ## Setup
 
-### Google Analytics
-
-1. Install the [gtag.js snippet](https://developers.google.com/analytics/devguides/collection/gtagjs/)
-2. Import Lyticus
-
 ```javascript
 import Lyticus from "lyticus";
-const lyticus = new Lyticus("google-analytics", () => window.gtag, {
-  trackingId: "UA-XXXXXXXXX-X"
-});
-```
-
-### Segment
-
-1. Install the [Segment snippet](https://segment.com/docs/sources/website/analytics.js/quickstart/#step-1-copy-the-snippet)
-2. Import Lyticus
-
-```javascript
-import Lyticus from "lyticus";
-const lyticus = new Lyticus("segment", () => window.analytics);
+const lyticus = new Lyticus("your-tracking-id");
 ```
 
 ## Methods
 
-### identify
+### trackNavigator
 
-Associates a users and their actions to a recognizable userId and traits.
-
-#### Example
-
-```javascript
-lyticus.identify({ userId: "abcde", traits: { subscribed: true } });
-```
-
-### track
-
-Parameter(s): _type, name, properties_
-
-Tracks an event.
+Tracks the navigator's details.
 
 #### Example
 
 ```javascript
-lyticus.track("click", "green-button", { text: "Hello, World!" });
+lyticus.trackNavigator();
 ```
 
-### page
-
-Parameter(s): _name_
+### trackPage
 
 Tracks a page view.
 
 #### Example
 
 ```javascript
-lyticus.page("About");
+lyticus.trackPage();
+```
+
+### trackClick
+
+Tracks a click.
+
+#### Example
+
+```javascript
+lyticus.trackClick("green-button");
+```
+
+### trackOutboundClick
+
+Tracks an outbound click.
+
+#### Example
+
+```javascript
+lyticus.trackOutboundClick("red-button", "https://www.google.com");
 ```
 
 ### addDocumentTracker
@@ -96,8 +74,7 @@ Lyticus will create a track event every time such browser event targets an eleme
 The created track event will have the following values:
 
 - type: the type of the browser event
-- name: the id of the element or the value of the "data-track-name" attribute
-- properties: the value of the "data-track-properties" attribute or null
+- value: the id of the element or the value of the "data-track-name" attribute
 
 Events without a name will not be tracked.
 
@@ -114,29 +91,13 @@ lyticus.addDocumentTracker("click", ["a", "button"]);
   Clicking this will create a track event with the following values:
       - type: "click"
       - name: "the-button"
-      - properties: null
 -->
 <button id="the-button">Click me</button>
 
 <!--
   Clicking this will create a track event with the following values:
       - type: "click"
-      - name: "another-button"
-      - properties: "{ color: 'blue' }"
--->
-<button
-  id="the-button"
-  data-track-name="another-button"
-  data-track-properties="{ color: 'blue' }"
->
-  Click me
-</button>
-
-<!--
-  Clicking this will create a track event with the following values:
-      - type: "click"
       - name: "the-link"
-      - properties: null
 -->
 <a href="https://www.google.com" id="the-link"> Click me </a>
 
