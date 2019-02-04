@@ -2,23 +2,24 @@ import axios from "axios";
 import nanoid from "nanoid";
 
 export default class Lyticus {
-  constructor(trackingId) {
-    this.trackingId = trackingId;
+  constructor(trackingId, options = {}) {
     this.sessionId = nanoid();
+    this.trackingId = trackingId;
+    this.options = options;
   }
-  track(event, options = {}) {
+  track(event, callback) {
     const decoratedEvent = {
       ...event,
-      trackingId,
-      sessionId
+      sessionId: this.sessionId,
+      trackingId: this.trackingId
     };
-    if (options.development) {
+    if (this.options.development) {
       console.log(decoratedEvent);
     } else {
       axios.post("https://beacon.lyticus.com/event", decoratedEvent);
     }
-    if (options.callback) {
-      setTimeout(options.callback, 300);
+    if (callback) {
+      setTimeout(callback, 300);
     }
   }
   trackNavigator() {
@@ -50,10 +51,8 @@ export default class Lyticus {
         path: window.location.pathname,
         value: value
       },
-      {
-        callback: function() {
-          document.location = url;
-        }
+      function() {
+        document.location = url;
       }
     );
   }
