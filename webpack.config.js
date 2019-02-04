@@ -5,7 +5,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname + "/dist/"),
     filename: "lyticus.js",
-    library: "lyticus",
+    library: "Lyticus",
     libraryTarget: "umd",
     umdNamedDefine: true
   },
