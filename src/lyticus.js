@@ -30,10 +30,10 @@ export default class Lyticus {
       userAgent: window.navigator.userAgent
     });
   }
-  trackPage() {
+  trackPage(path) {
     this.track({
       type: "page",
-      path: window.location.pathname,
+      path: path || window.location.pathname,
       referer: document.referrer
     });
   }
