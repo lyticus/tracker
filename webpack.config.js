@@ -7,6 +7,7 @@ module.exports = {
     filename: "lyticus.js",
     library: "Lyticus",
     libraryTarget: "umd",
+    libraryExport: "default",
     umdNamedDefine: true
   },
   module: {
