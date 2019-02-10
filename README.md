@@ -33,6 +33,46 @@ const lyticus = new Lyticus("your-tracking-id");
 </script>
 ```
 
+## Constructor
+
+### Development
+
+When set to true events will not be sent to the service but logged to the browser console instead.
+
+```javascript
+const lyticus = new Lyticus("your-tracking-id", {
+  development: process.env.NODE_ENV === "dev"
+});
+```
+
+### getPath
+
+Enables you to override the way the path should be fetched.
+
+#### Default implementation
+
+```javascript
+const lyticus = new Lyticus("your-tracking-id", {
+  getPath: () => {
+    return window.location.pathname;
+  }
+});
+```
+
+#### Vue: using route name instead of path 
+
+```javascript
+const lyticus = new Lyticus("your-tracking-id", {
+  getPath: () => {
+    const route = router.currentRoute;
+    if (!route || !route.name) {
+      return window.location.pathname;
+    }
+    return route.name;
+  }
+});
+```
+
 ## Methods
 
 ### trackNavigator

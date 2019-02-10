@@ -33,22 +33,27 @@ export default class Lyticus {
   trackPage(path) {
     this.track({
       type: "page",
-      path: path || window.location.pathname,
+      path:
+        path || options.getPath ? options.getPath() : window.location.pathname,
       referer: document.referrer
     });
   }
-  trackClick(value) {
+  trackClick(value, path) {
     this.track({
       type: "click",
-      path: window.location.pathname,
+      path:
+        path || options.getPath ? options.getPath() : window.location.pathname,
       value: value
     });
   }
-  trackOutboundClick(value, url) {
+  trackOutboundClick(value, url, path) {
     this.track(
       {
         type: "click",
-        path: window.location.pathname,
+        path:
+          path || options.getPath
+            ? options.getPath()
+            : window.location.pathname,
         value: value
       },
       function() {
