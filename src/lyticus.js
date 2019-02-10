@@ -34,7 +34,9 @@ export default class Lyticus {
     this.track({
       type: "page",
       path:
-        path || options.getPath ? options.getPath() : window.location.pathname,
+        path || this.options.getPath
+          ? this.options.getPath()
+          : window.location.pathname,
       referer: document.referrer
     });
   }
@@ -42,7 +44,9 @@ export default class Lyticus {
     this.track({
       type: "click",
       path:
-        path || options.getPath ? options.getPath() : window.location.pathname,
+        path || this.options.getPath
+          ? this.options.getPath()
+          : window.location.pathname,
       value: value
     });
   }
@@ -51,8 +55,8 @@ export default class Lyticus {
       {
         type: "click",
         path:
-          path || options.getPath
-            ? options.getPath()
+          path || this.options.getPath
+            ? this.options.getPath()
             : window.location.pathname,
         value: value
       },
