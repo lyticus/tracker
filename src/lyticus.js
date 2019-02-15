@@ -17,9 +17,12 @@ export default class Lyticus {
     if (this.options.development) {
       console.log(decoratedEvent);
     } else {
-      const doNotTrack =
+      const isDoNotTrack =
         "doNotTrack" in navigator && navigator.doNotTrack === "1";
-      if (!doNotTrack) {
+      const isPrerenderedPage =
+        "visibilityState" in document &&
+        document.visibilityState === "prerender";
+      if (!isDoNotTrack && !isPrerenderedPage) {
         axios.post("https://beacon.lyticus.com/event", decoratedEvent);
       }
     }
