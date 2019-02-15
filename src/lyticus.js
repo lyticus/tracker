@@ -35,6 +35,10 @@ export default class Lyticus {
     let referrer = undefined;
     if (!this.referrerTracked) {
       referrer = document.referrer;
+      if (!referrer) {
+        const urlSearchParams = new URLSearchParams(window.location.search);
+        referrer = urlSearchParams.get("ref");
+      }
       this.referrerTracked = true;
     }
     this.track({
