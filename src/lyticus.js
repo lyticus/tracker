@@ -47,14 +47,14 @@ export default class Lyticus {
   trackPage(path) {
     let referrer = undefined;
     if (!this.referrerTracked) {
-      referrer = document.referrer;
-      /*
-      if (!referrer) {
-        const urlSearchParams = new URLSearchParams(window.location.search);
-        referrer = urlSearchParams.get("ref");
+      const isExternalReferrer =
+        document.referrer.indexOf(
+          window.location.protocol + "//" + window.location.hostname
+        ) < 0;
+      if (isExternalReferrer) {
+        referrer = document.referrer;
+        this.referrerTracked = true;
       }
-      */
-      this.referrerTracked = true;
     }
     this.track({
       type: "page",
