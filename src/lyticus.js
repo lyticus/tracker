@@ -9,6 +9,12 @@ export default class Lyticus {
     this.referrerTracked = false;
   }
   track(event, callback) {
+    if (document.body === null) {
+      document.addEventListener("DOMContentLoaded", () => {
+        this.track(event, callback);
+      });
+      return;
+    }
     const decoratedEvent = {
       ...event,
       sessionId: this.sessionId,
