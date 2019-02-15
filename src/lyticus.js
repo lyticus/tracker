@@ -6,6 +6,7 @@ export default class Lyticus {
     this.sessionId = nanoid();
     this.trackingId = trackingId;
     this.options = options;
+    this.referrerTracked = false;
   }
   track(event, callback) {
     const decoratedEvent = {
@@ -31,13 +32,18 @@ export default class Lyticus {
     });
   }
   trackPage(path) {
+    let referrer = undefined;
+    if (!this.referrerTracked) {
+      referrer = document.referrer;
+      this.referrerTracked = true;
+    }
     this.track({
       type: "page",
       path:
         path || this.options.getPath
           ? this.options.getPath()
           : window.location.pathname,
-      referer: document.referrer
+      referrer
     });
   }
   trackClick(value, path) {
