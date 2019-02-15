@@ -17,7 +17,10 @@ export default class Lyticus {
     if (this.options.development) {
       console.log(decoratedEvent);
     } else {
-      axios.post("https://beacon.lyticus.com/event", decoratedEvent);
+      const doNotTrack = 'doNotTrack' in navigator && navigator.doNotTrack === "1"
+      if(!doNotTrack) {
+        axios.post("https://beacon.lyticus.com/event", decoratedEvent);
+      }
     }
     if (callback) {
       setTimeout(callback, 300);
