@@ -7,6 +7,14 @@ export default class Lyticus {
     this.trackingId = trackingId;
     this.options = options;
     this.referrerTracked = false;
+    function trackSession() {
+      this.track({
+        type: "session",
+        sessionId: this.sessionId
+      });
+    }
+    trackSession();
+    setInterval(trackSession, 15000);
   }
   track(event, callback) {
     if (document.body === null) {
@@ -17,7 +25,6 @@ export default class Lyticus {
     }
     const decoratedEvent = {
       ...event,
-      sessionId: this.sessionId,
       trackingId: this.trackingId
     };
     if (this.options.development) {
