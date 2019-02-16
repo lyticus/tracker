@@ -7,12 +7,12 @@ export default class Lyticus {
     this.trackingId = trackingId;
     this.options = options;
     this.referrerTracked = false;
-    function trackSession() {
+    const trackSession = () => {
       this.track({
         type: "session",
         sessionId: this.sessionId
       });
-    }
+    };
     trackSession();
     setInterval(trackSession, 15000);
   }
