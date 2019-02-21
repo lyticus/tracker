@@ -1,20 +1,10 @@
 import axios from "axios";
-import nanoid from "nanoid";
 
 export default class Lyticus {
   constructor(trackingId, options = {}) {
-    this.sessionId = nanoid();
     this.trackingId = trackingId;
     this.options = options;
     this.referrerTracked = false;
-    const trackSession = () => {
-      this.track({
-        type: "session",
-        sessionId: this.sessionId
-      });
-    };
-    trackSession();
-    setInterval(trackSession, 15000);
   }
   track(event, callback) {
     if (document.body === null) {
