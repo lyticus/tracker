@@ -114,7 +114,7 @@ Tracks an outbound click.
 ```javascript
 lyticus.trackOutboundClick("red-button", "https://www.google.com");
 ```
-
+<!---
 ### addDocumentTracker
 
 Parameter(s): _event type, selector strings_
@@ -131,7 +131,7 @@ The created track event will have the following values:
 Events without a name will not be tracked.
 
 The "data-track-ignore" attribute can be used to skip the creation of a track event.
-
+-->
 #### Example
 
 ```javascript
