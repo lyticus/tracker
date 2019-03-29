@@ -59,7 +59,7 @@ const lyticus = new Lyticus("your-tracking-id", {
 });
 ```
 
-#### Vue: using route name instead of path 
+#### Vue: using route name instead of path
 
 ```javascript
 const lyticus = new Lyticus("your-tracking-id", {
@@ -114,6 +114,7 @@ Tracks an outbound click.
 ```javascript
 lyticus.trackOutboundClick("red-button", "https://www.google.com");
 ```
+
 <!---
 ### addDocumentTracker
 
@@ -132,10 +133,35 @@ Events without a name will not be tracked.
 
 The "data-track-ignore" attribute can be used to skip the creation of a track event.
 -->
+
 #### Example
 
 ```javascript
 lyticus.addDocumentTracker("click", ["a", "button"]);
+```
+
+## Usage with Nuxt
+
+Add the following lyticus.js file to your middleware directory:
+
+```javascript
+import Lyticus from "lyticus";
+
+const lyticus = new Lyticus("your-tracking-id", {
+  development: process.env.NODE_ENV === "development"
+});
+
+export default ({ route }) => {
+  lyticus.trackPage(route.path);
+};
+```
+
+Add the following to your nuxt.config.js file:
+
+```javascript
+  router: {
+    middleware: ["lyticus"]
+  },
 ```
 
 ## Powered by
