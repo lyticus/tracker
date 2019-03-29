@@ -58,20 +58,14 @@ export default class Lyticus {
     }
     this.track({
       type: "page",
-      path:
-        path || this.options.getPath
-          ? this.options.getPath()
-          : window.location.pathname,
+      path: path || this.options.getPath(),
       referrer
     });
   }
   trackClick(value, path) {
     this.track({
       type: "click",
-      path:
-        path || this.options.getPath
-          ? this.options.getPath()
-          : window.location.pathname,
+      path: path || this.options.getPath(),
       value: value
     });
   }
@@ -79,10 +73,7 @@ export default class Lyticus {
     this.track(
       {
         type: "click",
-        path:
-          path || this.options.getPath
-            ? this.options.getPath()
-            : window.location.pathname,
+        path: path || this.options.getPath(),
         value: value
       },
       function() {
