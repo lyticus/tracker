@@ -2,6 +2,9 @@ import axios from "axios";
 
 export default class Lyticus {
   constructor(trackingId, options = {}) {
+    if (!options.getPath) {
+      options.getPath = () => window.location.pathname;
+    }
     this.trackingId = trackingId;
     this.options = options;
     this.referrerTracked = false;
