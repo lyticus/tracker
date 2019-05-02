@@ -140,6 +140,40 @@ The "data-track-ignore" attribute can be used to skip the creation of a track ev
 lyticus.addDocumentTracker("click", ["a", "button"]);
 ```
 
+## Usage with Vue
+
+Add the following to your main.js file:
+
+```javascript
+import Vue from "vue";
+import App from "./App.vue";
+import router from "./router";
+
+import Lyticus from "lyticus";
+
+const lyticus = new Lyticus("<your-tracking-id>", {
+  development: process.env.NODE_ENV !== "production",
+  getPath: () => {
+    const route = router.currentRoute;
+    if (!route || !route.name) {
+      return window.location.pathname;
+    }
+    return route.name;
+  }
+});
+
+router.afterEach(() => {
+  lyticus.trackPage();
+});
+
+Vue.config.productionTip = false;
+
+new Vue({
+  router,
+  render: h => h(App)
+}).$mount("#app");
+```
+
 ## Usage with Nuxt
 
 Add the following lyticus.js file to your middleware directory:
