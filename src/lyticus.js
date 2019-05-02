@@ -81,42 +81,4 @@ export default class Lyticus {
       }
     );
   }
-  addDocumentTracker(eventType, selectorStrings) {
-    document.addEventListener(eventType, event => {
-      const { target } = event;
-      for (let index = 0; index < selectorStrings.length; index++) {
-        const selectorString = selectorStrings[index];
-        if (target.matches(selectorString)) {
-          let value = null;
-          // Parse id
-          if (target.id) {
-            value = target.id;
-          }
-          // Parse attributes
-          if (target.attributes) {
-            // -- Ignore
-            const ingoreAttribute = target.attributes.getNamedItem(
-              "data-track-ignore"
-            );
-            if (ingoreAttribute) {
-              return;
-            }
-            // -- Value
-            const valueAttribute = target.attributes.getNamedItem(
-              "data-track-value"
-            );
-            if (valueAttribute) {
-              value = valueAttribute.value;
-            }
-          }
-          if (value) {
-            this.track(eventType, {
-              value: value
-            });
-          }
-          break;
-        }
-      }
-    });
-  }
 }

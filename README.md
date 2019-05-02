@@ -113,31 +113,6 @@ Tracks an outbound click.
 lyticus.trackOutboundClick("red-button", "https://www.google.com");
 ```
 
-<!---
-### addDocumentTracker
-
-Parameter(s): _event type, selector strings_
-
-Adds a listener to the document for a specified type of browser event.
-
-Lyticus will create a track event every time such browser event targets an element matching one of the specified selector strings.
-
-The created track event will have the following values:
-
-- type: the type of the browser event
-- value: the id of the element or the value of the "data-track-value" attribute
-
-Events without a name will not be tracked.
-
-The "data-track-ignore" attribute can be used to skip the creation of a track event.
--->
-
-#### Example
-
-```javascript
-lyticus.addDocumentTracker("click", ["a", "button"]);
-```
-
 ## Usage with Vue
 
 Add the following to your main.js file:
