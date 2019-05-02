@@ -1,10 +1,8 @@
 # lyticus
 
-> Analytics client
-
 ## About
 
-Lyticus mainty targets JavaScript Single-Page Applications (SPAs).
+This is the tracker library for [Lyticus](https://www.lyticus.com).
 
 ## Installation
 
@@ -151,7 +149,7 @@ import router from "./router";
 
 import Lyticus from "lyticus";
 
-const lyticus = new Lyticus("<your-tracking-id>", {
+const lyticus = new Lyticus("your-tracking-id", {
   development: process.env.NODE_ENV !== "production",
   getPath: () => {
     const route = router.currentRoute;
