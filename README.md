@@ -40,7 +40,16 @@ const lyticus = new Lyticus("your-tracking-id");
 
 ## Constructor
 
-### development (boolean)
+```javascript
+const lyticus = new Lyticus(trackingId, configuration);
+```
+
+* trackingId: string
+* configuration: object
+
+### configuration properties
+
+#### development (boolean)
 
 When set to true events will not be sent to the service but logged to the browser console instead.
 
@@ -50,11 +59,11 @@ const lyticus = new Lyticus("your-tracking-id", {
 });
 ```
 
-### getPath (function)
+#### getPath (function)
 
 Enables you to override the way the path should be fetched.
 
-#### Default implementation
+##### Default implementation
 
 ```javascript
 const lyticus = new Lyticus("your-tracking-id", {
@@ -64,7 +73,7 @@ const lyticus = new Lyticus("your-tracking-id", {
 });
 ```
 
-#### Vue: computing route name from router
+##### Vue: computing route name from router
 
 ```javascript
 const lyticus = new Lyticus("your-tracking-id", {
