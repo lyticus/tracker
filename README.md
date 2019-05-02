@@ -6,34 +6,41 @@ This is the tracker library for [Lyticus](https://www.lyticus.com).
 
 ## Installation
 
+### NPM
+
 ```bash
 npm install --save lyticus
 ```
 
 [npm package link](https://www.npmjs.com/package/lyticus)
 
+### CDN
+
+```html
+<script src="https://unpkg.com/lyticus"></script>
+```
+
 ## Setup
 
-### Via NPM
+### NPM
 
 ```javascript
 import Lyticus from "lyticus";
 const lyticus = new Lyticus("your-tracking-id");
 ```
 
-### Via CDN
+### CDN
 
 ```html
 <script src="https://unpkg.com/lyticus"></script>
 <script>
   var lyticus = new Lyticus("your-tracking-id");
-  lyticus.trackPage();
 </script>
 ```
 
 ## Constructor
 
-### Development
+### development (boolean)
 
 When set to true events will not be sent to the service but logged to the browser console instead.
 
@@ -43,7 +50,7 @@ const lyticus = new Lyticus("your-tracking-id", {
 });
 ```
 
-### getPath
+### getPath (function)
 
 Enables you to override the way the path should be fetched.
 
@@ -57,7 +64,7 @@ const lyticus = new Lyticus("your-tracking-id", {
 });
 ```
 
-#### Vue: using route name instead of path
+#### Vue: computing route name from router
 
 ```javascript
 const lyticus = new Lyticus("your-tracking-id", {
@@ -113,19 +120,22 @@ Tracks an outbound click.
 lyticus.trackOutboundClick("red-button", "https://www.google.com");
 ```
 
-## Usage with Vue
+## Framework examples
+
+### Vue
 
 Add the following to your main.js file:
 
 ```javascript
 import Vue from "vue";
-import App from "./App.vue";
-import router from "./router";
+import App from "@/App.vue";
+import router from "@/router";
 
 import Lyticus from "lyticus";
 
+// Create Lyticus instance
 const lyticus = new Lyticus("your-tracking-id", {
-  development: process.env.NODE_ENV !== "production",
+  development: process.env.NODE_ENV === "development",
   getPath: () => {
     const route = router.currentRoute;
     if (!route || !route.name) {
@@ -135,9 +145,16 @@ const lyticus = new Lyticus("your-tracking-id", {
   }
 });
 
+// Automatically track route changes
 router.afterEach(() => {
   lyticus.trackPage();
 });
+
+/*
+(OPTIONAL)
+Adding $lyticus to the Vue prototype enables you to call Lyticus methods from within your components
+*/
+Vue.prototype.$lyticus = lyticus;
 
 Vue.config.productionTip = false;
 
@@ -147,7 +164,7 @@ new Vue({
 }).$mount("#app");
 ```
 
-## Usage with Nuxt
+### Nuxt
 
 Add the following lyticus.js file to your middleware directory:
 
