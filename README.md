@@ -44,8 +44,8 @@ const lyticus = new Lyticus("your-tracking-id");
 const lyticus = new Lyticus(trackingId, configuration);
 ```
 
-* trackingId: string
-* configuration: object
+- trackingId: string
+- configuration: object
 
 ### configuration properties
 
@@ -195,6 +195,24 @@ Add the following to your nuxt.config.js file:
   router: {
     middleware: ["lyticus"]
   },
+```
+
+### VuePress
+
+Add the following to your .vuepress/enhanceApp.js file:
+
+```javascript
+import Lyticus from "lyticus";
+
+const lyticus = new Lyticus("your-tracking-id", {
+  development: process.env.NODE_ENV === "development"
+});
+
+export default ({ router }) => {
+  router.afterEach(function(to) {
+    lyticus.trackPage(to.fullPath);
+  });
+};
 ```
 
 ## Powered by
