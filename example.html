@@ -4,12 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
+    <title>Example</title>
     <script src="https://unpkg.com/lyticus"></script>
     <script>
       var lyticus = new Lyticus("your-tracking-id", {
         development: true
       });
+      lyticus.trackNavigator();
       lyticus.trackPage();
     </script>
   </head>
