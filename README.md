@@ -121,7 +121,7 @@ lyticus.trackClick("green-button");
 
 ### trackOutboundClick
 
-Tracks an outbound click.
+Tracks an outbound click and redirects to the specified address.
 
 #### Example
 
@@ -154,6 +154,9 @@ const lyticus = new Lyticus("your-tracking-id", {
   }
 });
 
+// Track the navigator
+lyticus.trackNavigator();
+
 // Automatically track route changes
 router.afterEach(() => {
   lyticus.trackPage();
@@ -184,6 +187,8 @@ const lyticus = new Lyticus("your-tracking-id", {
   development: process.env.NODE_ENV === "development"
 });
 
+lyticus.trackNavigator();
+
 export default ({ route }) => {
   lyticus.trackPage(route.path);
 };
@@ -209,6 +214,7 @@ export default ({ router }) => {
     const lyticus = new Lyticus("your-tracking-id", {
       development: process.env.NODE_ENV === "development"
     });
+    lyticus.trackNavigator();
     router.afterEach(to => {
       lyticus.trackPage(to.fullPath);
     });
