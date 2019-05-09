@@ -73,20 +73,6 @@ const lyticus = new Lyticus("your-property-id", {
 });
 ```
 
-##### Vue: computing route name from router
-
-```javascript
-const lyticus = new Lyticus("your-property-id", {
-  getPath: () => {
-    const route = router.currentRoute;
-    if (!route || !route.name) {
-      return window.location.pathname;
-    }
-    return route.name;
-  }
-});
-```
-
 ## Methods
 
 ### trackNavigator
