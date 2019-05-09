@@ -1,11 +1,11 @@
 import axios from "axios";
 
 export default class Lyticus {
-  constructor(trackingId, options = {}) {
+  constructor(propertyId, options = {}) {
     if (!options.getPath) {
       options.getPath = () => window.location.pathname;
     }
-    this.trackingId = trackingId;
+    this.propertyId = propertyId;
     this.options = options;
     this.referrerTracked = false;
   }
@@ -18,7 +18,7 @@ export default class Lyticus {
     }
     const decoratedEvent = {
       ...event,
-      trackingId: this.trackingId
+      propertyId: this.propertyId
     };
     if (this.options.development) {
       console.log(decoratedEvent);

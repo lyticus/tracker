@@ -26,7 +26,7 @@ npm install --save lyticus
 
 ```javascript
 import Lyticus from "lyticus";
-const lyticus = new Lyticus("your-tracking-id");
+const lyticus = new Lyticus("your-property-id");
 ```
 
 ### CDN
@@ -34,17 +34,17 @@ const lyticus = new Lyticus("your-tracking-id");
 ```html
 <script src="https://unpkg.com/lyticus"></script>
 <script>
-  var lyticus = new Lyticus("your-tracking-id");
+  var lyticus = new Lyticus("your-property-id");
 </script>
 ```
 
 ## Constructor
 
 ```javascript
-const lyticus = new Lyticus(trackingId, configuration);
+const lyticus = new Lyticus(propertyId, configuration);
 ```
 
-- trackingId: string
+- propertyId: string
 - configuration: object
 
 ### configuration properties
@@ -54,7 +54,7 @@ const lyticus = new Lyticus(trackingId, configuration);
 When set to true events will not be sent to the service but logged to the browser console instead.
 
 ```javascript
-const lyticus = new Lyticus("your-tracking-id", {
+const lyticus = new Lyticus("your-property-id", {
   development: process.env.NODE_ENV === "dev"
 });
 ```
@@ -66,7 +66,7 @@ Enables you to override the way the path should be fetched.
 ##### Default implementation
 
 ```javascript
-const lyticus = new Lyticus("your-tracking-id", {
+const lyticus = new Lyticus("your-property-id", {
   getPath: () => {
     return window.location.pathname;
   }
@@ -76,7 +76,7 @@ const lyticus = new Lyticus("your-tracking-id", {
 ##### Vue: computing route name from router
 
 ```javascript
-const lyticus = new Lyticus("your-tracking-id", {
+const lyticus = new Lyticus("your-property-id", {
   getPath: () => {
     const route = router.currentRoute;
     if (!route || !route.name) {
@@ -143,7 +143,7 @@ import router from "@/router";
 import Lyticus from "lyticus";
 
 // Create Lyticus instance
-const lyticus = new Lyticus("your-tracking-id", {
+const lyticus = new Lyticus("your-property-id", {
   development: process.env.NODE_ENV === "development",
   getPath: () => {
     const route = router.currentRoute;
@@ -183,7 +183,7 @@ Add the following lyticus.js file to your middleware directory:
 ```javascript
 import Lyticus from "lyticus";
 
-const lyticus = new Lyticus("your-tracking-id", {
+const lyticus = new Lyticus("your-property-id", {
   development: process.env.NODE_ENV === "development"
 });
 
@@ -211,7 +211,7 @@ import Lyticus from "lyticus";
 
 export default ({ router }) => {
   if (typeof window !== "undefined") {
-    const lyticus = new Lyticus("your-tracking-id", {
+    const lyticus = new Lyticus("your-property-id", {
       development: process.env.NODE_ENV === "development"
     });
     lyticus.trackNavigator();
