@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.8] - 2019-05-10
+
+### Added
+
+- Polyfill for URLSearchParams (increasing bundle size from 5 KB to 8 KB)
+
 ## [1.0.7] - 2019-05-10
 
 ### Changed

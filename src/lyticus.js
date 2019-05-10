@@ -1,3 +1,5 @@
+import 'url-search-params-polyfill';
+
 export default class Lyticus {
   constructor(propertyId, options = {}) {
     if (!propertyId) {
