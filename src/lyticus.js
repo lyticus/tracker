@@ -5,6 +5,37 @@ export default class Lyticus {
     if (!options.getPath) {
       options.getPath = () => window.location.pathname;
     }
+    if (options.historyMode) {
+      let historyModeEnabled = false;
+      if (!Event) {
+        console.error("Unable to access Event");
+      } else if (!window.dispatchEvent) {
+        console.error("Unable to access window.dispatchEvent");
+      } else if (!window.history) {
+        console.error("Unable to access window.history");
+      } else if (!window.history.pushState) {
+        console.error("Unable to access window.history.pushState");
+      } else {
+        historyModeEnabled = true;
+        const stateListener = function(type) {
+          let original = window.history[type];
+          return function() {
+            const rv = original.apply(this, arguments);
+            const event = new Event(type);
+            event.arguments = arguments;
+            window.dispatchEvent(event);
+            return rv;
+          };
+        };
+        window.history.pushState = stateListener("pushState");
+        window.addEventListener("pushState", function() {
+          post(true);
+        });
+      }
+      if (!historyModeEnabled) {
+        console.error("History mode could not be enabled");
+      }
+    }
     this.propertyId = propertyId;
     this.options = options;
     this.referrerTracked = false;
