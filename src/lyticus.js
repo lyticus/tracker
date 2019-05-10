@@ -1,4 +1,9 @@
-import axios from "axios";
+function post(url, body) {
+  const xhr = new XMLHttpRequest();
+  xhr.open("POST", url);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.send(JSON.stringify(body));
+}
 
 export default class Lyticus {
   constructor(propertyId, options = {}) {
@@ -60,7 +65,7 @@ export default class Lyticus {
         "visibilityState" in document &&
         document.visibilityState === "prerender";
       if (!isDoNotTrack && !isPrerenderedPage) {
-        axios.post("https://beacon.lyticus.com/event", decoratedEvent);
+        post("https://beacon.lyticus.com/event", decoratedEvent);
       }
     }
     if (callback) {
