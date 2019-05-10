@@ -29,7 +29,7 @@ export default class Lyticus {
         };
         window.history.pushState = stateListener("pushState");
         window.addEventListener("pushState", function() {
-          post(true);
+          this.trackPage();
         });
       }
       if (!historyModeEnabled) {
