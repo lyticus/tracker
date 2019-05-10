@@ -10,7 +10,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-Nothing
+- Support for URL referrers ("referrer", "ref", "source", "utm_source")
 
 ### Removed
 

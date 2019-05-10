@@ -81,6 +81,7 @@ export default class Lyticus {
     });
   }
   trackPage(path) {
+    // Referrer
     let referrer = undefined;
     if (!this.referrerTracked) {
       const isExternalReferrer =
@@ -92,10 +93,22 @@ export default class Lyticus {
         this.referrerTracked = true;
       }
     }
+    // URL referrer
+    let urlReferrer = undefined;
+    const queryParameters = new URLSearchParams(window.location.search);
+    ["referrer", "ref", "source", "utm_source"].forEach(
+      referrerQueryParameter => {
+        const queryParameterValue = queryParameters.get(referrerQueryParameter);
+        if (queryParameterValue) {
+          urlReferrer = queryParameterValue;
+        }
+      }
+    );
     this.track({
       type: "page",
       path: path || this.options.getPath(),
-      referrer
+      referrer,
+      urlReferrer
     });
   }
   trackClick(value, path) {
