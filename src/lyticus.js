@@ -57,9 +57,6 @@ export default class Lyticus {
       document.dispatchEvent(
         new CustomEvent("lyticus:track", { detail: decoratedEvent })
       );
-      document.dispatchEvent(
-        new CustomEvent("lyticus:events", { detail: this.events })
-      );
     }
     // Invoke callback after 300ms
     if (callback) {

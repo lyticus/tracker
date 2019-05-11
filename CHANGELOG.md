@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.12] - 2019-05-11
+
+### Removed
+
+- lyticus:events
+
 ## [1.0.11] - 2019-05-11
 
 ### Added
@@ -10,13 +16,13 @@ All notable changes to this project will be documented in this file.
 
 ### Removed
 
-- window._lyticus
+- window.\_lyticus
 
 ## [1.0.10] - 2019-05-11
 
 ### Added
 
-- window._lyticus
+- window.\_lyticus
 
 ## [1.0.9] - 2019-05-11
 
