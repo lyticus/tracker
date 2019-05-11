@@ -13,7 +13,6 @@ export default class Lyticus {
     this.referrerTracked = false;
     this.urlReferrerTracked = false;
     this.events = [];
-    window._lyticus = this;
   }
 
   track(event, callback) {
@@ -48,17 +47,20 @@ export default class Lyticus {
       xhr.setRequestHeader("Content-Type", "application/json");
       xhr.send(JSON.stringify(decoratedEvent));
     }
-    // Dispatch custom event
-    if (CustomEvent) {
-      document.dispatchEvent(
-        new CustomEvent("lyticus:track", { detail: decoratedEvent })
-      );
-    }
     // Add event to events array
     this.events.push({
       ...decoratedEvent,
       time: new Date()
     });
+    // Dispatch custom events
+    if (CustomEvent) {
+      document.dispatchEvent(
+        new CustomEvent("lyticus:track", { detail: decoratedEvent })
+      );
+      document.dispatchEvent(
+        new CustomEvent("lyticus:events", { detail: this.events })
+      );
+    }
     // Invoke callback after 300ms
     if (callback) {
       setTimeout(callback, 300);

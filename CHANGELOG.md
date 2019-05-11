@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.11] - 2019-05-11
+
+### Added
+
+- New custom event: lyticus:events
+
+### Removed
+
+- window._lyticus
+
 ## [1.0.10] - 2019-05-11
 
 ### Added
