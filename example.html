@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Example</title>
-    <script src="https://unpkg.com/lyticus"></script>
+    <script src="./dist/lyticus.js"></script>
     <script>
       var lyticus = new Lyticus("your-property-id", {
         development: true
       });
       lyticus.trackNavigator();
       lyticus.trackPage();
+      console.log(lyticus.getEvents());
     </script>
   </head>
   <body>

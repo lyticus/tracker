@@ -1,4 +1,4 @@
-import 'url-search-params-polyfill';
+import "url-search-params-polyfill";
 
 export default class Lyticus {
   constructor(propertyId, options = {}) {
@@ -12,6 +12,7 @@ export default class Lyticus {
     this.options = options;
     this.referrerTracked = false;
     this.urlReferrerTracked = false;
+    this.events = [];
   }
 
   track(event, callback) {
@@ -52,6 +53,11 @@ export default class Lyticus {
         new CustomEvent("lyticus:track", { detail: decoratedEvent })
       );
     }
+    // Add event to events array
+    this.events.push({
+      ...decoratedEvent,
+      time: new Date()
+    });
     // Invoke callback after 300ms
     if (callback) {
       setTimeout(callback, 300);
@@ -160,5 +166,9 @@ export default class Lyticus {
       console.error("History mode could not be enabled");
     }
     return historyModeEnabled;
+  }
+
+  getEvents() {
+    return this.events;
   }
 }
