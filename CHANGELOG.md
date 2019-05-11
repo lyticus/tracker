@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.10] - 2019-05-11
+
+### Added
+
+- window._lyticus
+
 ## [1.0.9] - 2019-05-11
 
 ### Added

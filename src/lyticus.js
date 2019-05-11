@@ -13,6 +13,7 @@ export default class Lyticus {
     this.referrerTracked = false;
     this.urlReferrerTracked = false;
     this.events = [];
+    window._lyticus = this;
   }
 
   track(event, callback) {
