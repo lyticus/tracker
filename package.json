@@ -13,6 +13,7 @@
   "author": "Bjorn Krols",
   "license": "MIT",
   "dependencies": {
+    "custom-event-polyfill": "^1.0.7",
     "url-search-params-polyfill": "^6.0.0"
   },
   "devDependencies": {

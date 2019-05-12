@@ -1,3 +1,4 @@
+import "custom-event-polyfill";
 import "url-search-params-polyfill";
 
 import { version } from "../package.json";
@@ -16,19 +17,17 @@ export default class Lyticus {
     this.referrerTracked = false;
     this.urlReferrerTracked = false;
     this.events = [];
-    if (CustomEvent) {
-      document.dispatchEvent(
-        new CustomEvent("lyticus:ready", {
-          detail: {
-            version: this.version,
-            propertyId: this.propertyId,
-            options: {
-              development: !!this.options.development
-            }
+    document.dispatchEvent(
+      new CustomEvent("lyticus:ready", {
+        detail: {
+          version: this.version,
+          propertyId: this.propertyId,
+          options: {
+            development: !!this.options.development
           }
-        })
-      );
-    }
+        }
+      })
+    );
   }
 
   track(event, callback) {
@@ -68,11 +67,9 @@ export default class Lyticus {
     // Add event to events array
     this.events.push(decoratedEvent);
     // Dispatch custom event
-    if (CustomEvent) {
-      document.dispatchEvent(
-        new CustomEvent("lyticus:track", { detail: decoratedEvent })
-      );
-    }
+    document.dispatchEvent(
+      new CustomEvent("lyticus:track", { detail: decoratedEvent })
+    );
     // Invoke callback after 300ms
     if (callback) {
       setTimeout(callback, 300);
