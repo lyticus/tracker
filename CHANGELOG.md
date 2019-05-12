@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.14] - 2019-05-12
+
+### Added
+
+- getVersion()
+
+### Changed
+
+- The detail implementation of lyticus:ready (explicit property serialization)
+
 ## [1.0.13] - 2019-05-12
 
 ### Added

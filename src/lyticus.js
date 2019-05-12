@@ -1,4 +1,5 @@
 import "url-search-params-polyfill";
+const packageJSON = require("../package.json");
 
 export default class Lyticus {
   constructor(propertyId, options = {}) {
@@ -8,6 +9,7 @@ export default class Lyticus {
     if (!options.getPath) {
       options.getPath = () => window.location.pathname;
     }
+    this.version = packageJSON.version;
     this.propertyId = propertyId;
     this.options = options;
     this.referrerTracked = false;
@@ -15,7 +17,15 @@ export default class Lyticus {
     this.events = [];
     if (CustomEvent) {
       document.dispatchEvent(
-        new CustomEvent("lyticus:ready", { detail: this })
+        new CustomEvent("lyticus:ready", {
+          detail: {
+            version: this.version,
+            propertyId: this.propertyId,
+            options: {
+              development: !!this.options.development
+            }
+          }
+        })
       );
     }
   }
@@ -174,5 +184,9 @@ export default class Lyticus {
 
   getEvents() {
     return this.events;
+  }
+
+  getVersion() {
+    return this.version;
   }
 }
