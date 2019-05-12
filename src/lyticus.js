@@ -1,5 +1,6 @@
 import "url-search-params-polyfill";
-const packageJSON = require("../package.json");
+
+import { version } from "../package.json";
 
 export default class Lyticus {
   constructor(propertyId, options = {}) {
@@ -9,7 +10,7 @@ export default class Lyticus {
     if (!options.getPath) {
       options.getPath = () => window.location.pathname;
     }
-    this.version = packageJSON.version;
+    this.version = version;
     this.propertyId = propertyId;
     this.options = options;
     this.referrerTracked = false;
