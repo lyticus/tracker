@@ -1,6 +1,6 @@
 {
   "name": "lyticus",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "Analytics client",
   "main": "dist/lyticus.js",
   "scripts": {
