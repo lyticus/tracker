@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.13] - 2019-05-12
+
+### Added
+
+- Time property to event
+- Development property to event
+- New custom event: lyticus:ready
+
+### Other
+
+- Upgraded babel-loader
+
 ## [1.0.12] - 2019-05-11
 
 ### Removed

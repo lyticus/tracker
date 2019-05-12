@@ -13,6 +13,11 @@ export default class Lyticus {
     this.referrerTracked = false;
     this.urlReferrerTracked = false;
     this.events = [];
+    if (CustomEvent) {
+      document.dispatchEvent(
+        new CustomEvent("lyticus:ready", { detail: this })
+      );
+    }
   }
 
   track(event, callback) {
@@ -35,10 +40,12 @@ export default class Lyticus {
     if (isPrerenderedPage) {
       return;
     }
-    // Decorate the event with the property id
+    // Decorate the event with the property id, time and development flag
     const decoratedEvent = {
       ...event,
-      propertyId: this.propertyId
+      propertyId: this.propertyId,
+      time: new Date(),
+      development: this.options.development
     };
     // POST to beacon if not in development mode
     if (!this.options.development) {
@@ -48,11 +55,8 @@ export default class Lyticus {
       xhr.send(JSON.stringify(decoratedEvent));
     }
     // Add event to events array
-    this.events.push({
-      ...decoratedEvent,
-      time: new Date()
-    });
-    // Dispatch custom events
+    this.events.push(decoratedEvent);
+    // Dispatch custom event
     if (CustomEvent) {
       document.dispatchEvent(
         new CustomEvent("lyticus:track", { detail: decoratedEvent })

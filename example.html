@@ -7,13 +7,18 @@
     <title>Example</title>
     <script src="./dist/lyticus.js"></script>
     <script>
+      document.addEventListener("lyticus:ready", function(e) {
+        console.log("lyticus:ready", e.detail);
+      });
+      document.addEventListener("lyticus:track", function(e) {
+        console.log("lyticus:track", e.detail);
+      });
       var lyticus = new Lyticus("your-property-id", {
         development: true
       });
       lyticus.trackNavigator();
       lyticus.trackPage();
       console.log(lyticus.getEvents());
-      lyticus.trackPage();
     </script>
   </head>
   <body>
