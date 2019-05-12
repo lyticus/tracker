@@ -54,7 +54,7 @@ export default class Lyticus {
     const decoratedEvent = {
       ...event,
       propertyId: this.propertyId,
-      time: new Date(),
+      time: new Date().getTime(),
       development: this.options.development
     };
     // POST to beacon if not in development mode

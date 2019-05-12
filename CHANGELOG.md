@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.15] - 2019-05-12
+
+### Changed
+
+- The time property is set to the number of milliseconds since the Unix Epoch
+
 ## [1.0.14] - 2019-05-12
 
 ### Added
