@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.16] - 2019-05-12
+
+### Other
+
+- Corrected version number
+
 ## [1.0.15] - 2019-05-12
 
 ### Changed
