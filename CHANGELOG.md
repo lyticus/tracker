@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.18] - 2019-05-13
+
+### Added
+
+- `window.__LYTICUS__` exposing a safe copy of the instance's configuration
+
+### Changed
+
+- Renamed lyticus:ready to lyticus:configuration
+- Use JSON.parse(JSON.stringify(this)) to build the payload for lyticus:configuration
+
+
 ## [1.0.17] - 2019-05-12
 
 ### Added

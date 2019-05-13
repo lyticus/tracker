@@ -7,8 +7,8 @@
     <title>Example</title>
     <script src="./dist/lyticus.js"></script>
     <script>
-      document.addEventListener("lyticus:ready", function(e) {
-        console.log("lyticus:ready", e.detail);
+      document.addEventListener("lyticus:configuration", function(e) {
+        console.log("lyticus:configuration", e.detail);
       });
       document.addEventListener("lyticus:track", function(e) {
         console.log("lyticus:track", e.detail);

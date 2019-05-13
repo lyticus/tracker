@@ -17,15 +17,18 @@ export default class Lyticus {
     this.referrerTracked = false;
     this.urlReferrerTracked = false;
     this.events = [];
+    const safeConfig = JSON.parse(
+      JSON.stringify({
+        ...this,
+        events: undefined,
+        referrerTracked: undefined,
+        urlReferrerTracked: undefined
+      })
+    );
+    window.__LYTICUS__ = safeConfig;
     document.dispatchEvent(
-      new CustomEvent("lyticus:ready", {
-        detail: {
-          version: this.version,
-          propertyId: this.propertyId,
-          options: {
-            development: !!this.options.development
-          }
-        }
+      new CustomEvent("lyticus:configuration", {
+        detail: safeConfig
       })
     );
   }
