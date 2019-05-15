@@ -1,17 +1,26 @@
 {
   "name": "lyticus",
   "version": "1.0.18",
-  "description": "Analytics client",
+  "description": "Tracker library for Lyticus",
+  "author": "Bjorn Krols (https://byteboomers.com)",
+  "license": "MIT",
+  "keywords": [
+    "analytics",
+    "tracking",
+    "lyticus"
+  ],
+  "homepage": "https://github.com/byteboomers/lyticus-tracker#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/byteboomers/lyticus-tracker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/byteboomers/lyticus-tracker/issues"
+  },
   "main": "dist/lyticus.js",
   "scripts": {
     "build": "webpack --mode production --progress"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Botre/lyticus.git"
-  },
-  "author": "Bjorn Krols",
-  "license": "MIT",
   "dependencies": {
     "custom-event-polyfill": "^1.0.7",
     "url-search-params-polyfill": "^6.0.0"
