@@ -1,4 +1,4 @@
-# lyticus
+# lyticus-tracker
 
 ## About
 
