@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.19] - 2019-05-20
+
+### Changed
+
+- property to website
+
+### Removed
+
+- development flag from decorated events
+
 ## [1.0.18] - 2019-05-13
 
 ### Added

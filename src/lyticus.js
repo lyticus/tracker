@@ -4,15 +4,15 @@ import "url-search-params-polyfill";
 import { version } from "../package.json";
 
 export default class Lyticus {
-  constructor(propertyId, options = {}) {
-    if (!propertyId) {
-      console.error("Must provide a property id");
+  constructor(websiteId, options = {}) {
+    if (!websiteId) {
+      console.error("Must provide a id");
     }
     if (!options.getPath) {
       options.getPath = () => window.location.pathname;
     }
     this.version = version;
-    this.propertyId = propertyId;
+    this.websiteId = websiteId;
     this.options = options;
     this.referrerTracked = false;
     this.urlReferrerTracked = false;
@@ -53,12 +53,11 @@ export default class Lyticus {
     if (isPrerenderedPage) {
       return;
     }
-    // Decorate the event with the property id, time and development flag
+    // Decorate the event with the website id and time
     const decoratedEvent = {
       ...event,
-      propertyId: this.propertyId,
-      time: new Date().getTime(),
-      development: this.options.development
+      websiteId: this.websiteId,
+      time: new Date().getTime()
     };
     // POST to beacon if not in development mode
     if (!this.options.development) {
