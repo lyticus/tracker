@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.22] - 2019-05-20
+
+### Added
+
+- cookies support
+
+### Changed
+
+- the way default options are merged with user options
+- undefined and empty referrer and urlReferrer variables are not sent to the beacon anymore
+
 ## [1.0.21] - 2019-05-20
 
 ### Other

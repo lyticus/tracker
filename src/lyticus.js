@@ -3,17 +3,31 @@ import "url-search-params-polyfill";
 
 import { version } from "../package.json";
 
+import Cookies from "js-cookie";
+
+const DEFAULT_OPTIONS = {
+  cookies: true,
+  development: false,
+  getPath: () => window.location.pathname
+};
+
+const FRESH_COOKIE = {
+  newVisitor: true,
+  newSession: true,
+  lastEvent: new Date()
+};
+
 export default class Lyticus {
   constructor(websiteId, options = {}) {
     if (!websiteId) {
       console.error("Must provide a id");
     }
-    if (!options.getPath) {
-      options.getPath = () => window.location.pathname;
-    }
     this.version = version;
     this.websiteId = websiteId;
-    this.options = options;
+    this.options = {
+      ...DEFAULT_OPTIONS,
+      ...options
+    };
     this.referrerTracked = false;
     this.urlReferrerTracked = false;
     this.events = [];
@@ -54,7 +68,7 @@ export default class Lyticus {
       return;
     }
     // Decorate the event with the website id and time
-    const decoratedEvent = {
+    let decoratedEvent = {
       ...event,
       websiteId: this.websiteId,
       time: new Date().getTime()
@@ -88,6 +102,10 @@ export default class Lyticus {
   }
 
   trackPage(path) {
+    const event = {
+      type: "page",
+      path: path || this.options.getPath()
+    };
     // Referrer
     let referrer = undefined;
     if (!this.referrerTracked) {
@@ -119,12 +137,50 @@ export default class Lyticus {
         }
       }
     }
-    this.track({
-      type: "page",
-      path: path || this.options.getPath(),
-      referrer,
-      urlReferrer
-    });
+    if (referrer && referrer.length) {
+      event.referrer = referrer;
+    }
+    if (urlReferrer && urlReferrer.length) {
+      event.urlReferrer = urlReferrer;
+    }
+    // Decorate the event with cookie information
+    if (this.options.cookies) {
+      const now = new Date();
+      const midnight = new Date(
+        now.getFullYear(),
+        now.getMonth(),
+        now.getDate(),
+        24,
+        0,
+        0
+      );
+      const thirtyMinsAgo = new Date();
+      thirtyMinsAgo.setMinutes(thirtyMinsAgo.getMinutes() - 30);
+      let cookieData = Cookies.get("_lyticus");
+      if (!cookieData) {
+        cookieData = FRESH_COOKIE;
+      }
+      try {
+        cookieData = JSON.parse(cookieData);
+      } catch (error) {
+        cookieData = FRESH_COOKIE;
+      }
+      if (cookieData.lastEvent < thirtyMinsAgo) {
+        cookieData.newSession = true;
+      }
+      if (cookieData.newVisitor) {
+        event.newVisitor = true;
+      }
+      if (cookieData.newSession) {
+        event.newSession = true;
+      }
+      cookieData.newVisitor = false;
+      cookieData.newSession = false;
+      Cookies.set("_lyticus", JSON.stringify(cookieData), {
+        expires: midnight
+      });
+    }
+    this.track(event);
   }
 
   trackClick(value, path) {
