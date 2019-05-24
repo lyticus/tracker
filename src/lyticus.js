@@ -3,7 +3,6 @@ import "url-search-params-polyfill";
 
 import { version } from "../package.json";
 
-import nanoid from "nanoid";
 import Cookies from "js-cookie";
 
 const DEFAULT_OPTIONS = {
@@ -20,7 +19,13 @@ const blankLifetime = () => {
 
 const blankSession = () => {
   return {
-    id: nanoid(),
+    id:
+      Math.random()
+        .toString(36)
+        .substring(2, 15) +
+      Math.random()
+        .toString(36)
+        .substring(2, 15),
     events: []
   };
 };

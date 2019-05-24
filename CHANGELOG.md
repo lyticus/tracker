@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.24] - 2019-05-24
+
+### Removed
+
+- nanoid dependency
+
 ## [1.0.23] - 2019-05-24
 
 ### Changed
