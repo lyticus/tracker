@@ -3,6 +3,7 @@ import "url-search-params-polyfill";
 
 import { version } from "../package.json";
 
+import nanoid from "nanoid";
 import Cookies from "js-cookie";
 
 const DEFAULT_OPTIONS = {
@@ -11,10 +12,17 @@ const DEFAULT_OPTIONS = {
   getPath: () => window.location.pathname
 };
 
-const FRESH_COOKIE = {
-  newVisitor: true,
-  newSession: true,
-  lastEvent: new Date()
+const blankLifetime = () => {
+  return {
+    tracked: false
+  };
+};
+
+const blankSession = () => {
+  return {
+    id: nanoid(),
+    events: []
+  };
 };
 
 export default class Lyticus {
@@ -73,6 +81,54 @@ export default class Lyticus {
       websiteId: this.websiteId,
       time: new Date().getTime()
     };
+    // Decorate the event with cookie information
+    if (this.options.cookies) {
+      // Lifetime
+      let lifetimeData = Cookies.get("_lyticus_lifetime");
+      if (!lifetimeData) {
+        lifetimeData = blankLifetime();
+      }
+      try {
+        lifetimeData = JSON.parse(lifetimeData);
+      } catch (error) {
+        lifetimeData = blankLifetime();
+      }
+      if (!lifetimeData.tracked) {
+        decoratedEvent.newVisitor = true;
+        lifetimeData.tracked = true;
+        const in2Years = 365 * 2;
+        Cookies.set("_lyticus_lifetime", JSON.stringify(lifetimeData), {
+          expires: in2Years
+        });
+      }
+      // Session
+      let sessionData = Cookies.get("_lyticus_session");
+      if (!sessionData) {
+        sessionData = blankSession();
+      }
+      try {
+        sessionData = JSON.parse(sessionData);
+      } catch (error) {
+        sessionData = blankSession();
+      }
+      decoratedEvent.sessionId = sessionData.id;
+      if (
+        event.type === "page" &&
+        !sessionData.events.find(
+          e => e.type === "page" && e.path == decoratedEvent.path
+        )
+      ) {
+        decoratedEvent.unique = true;
+        sessionData.events.push({
+          type: decoratedEvent.type,
+          path: decoratedEvent.path
+        });
+      }
+      const in30Minutes = 1 / 48;
+      Cookies.set("_lyticus_session", JSON.stringify(sessionData), {
+        expires: in30Minutes
+      });
+    }
     // POST to beacon if not in development mode
     if (!this.options.development) {
       const xhr = new XMLHttpRequest();
@@ -142,43 +198,6 @@ export default class Lyticus {
     }
     if (urlReferrer && urlReferrer.length) {
       event.urlReferrer = urlReferrer;
-    }
-    // Decorate the event with cookie information
-    if (this.options.cookies) {
-      const now = new Date();
-      const midnight = new Date(
-        now.getFullYear(),
-        now.getMonth(),
-        now.getDate(),
-        24,
-        0,
-        0
-      );
-      const thirtyMinsAgo = new Date();
-      thirtyMinsAgo.setMinutes(thirtyMinsAgo.getMinutes() - 30);
-      let cookieData = Cookies.get("_lyticus");
-      if (!cookieData) {
-        cookieData = FRESH_COOKIE;
-      }
-      try {
-        cookieData = JSON.parse(cookieData);
-      } catch (error) {
-        cookieData = FRESH_COOKIE;
-      }
-      if (cookieData.lastEvent < thirtyMinsAgo) {
-        cookieData.newSession = true;
-      }
-      if (cookieData.newVisitor) {
-        event.newVisitor = true;
-      }
-      if (cookieData.newSession) {
-        event.newSession = true;
-      }
-      cookieData.newVisitor = false;
-      cookieData.newSession = false;
-      Cookies.set("_lyticus", JSON.stringify(cookieData), {
-        expires: midnight
-      });
     }
     this.track(event);
   }

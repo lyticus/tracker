@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.23] - 2019-05-24
+
+### Changed
+
+- cookie implementation to support: new visitors, unique page views, session length
+
 ## [1.0.22] - 2019-05-23
 
 ### Added
