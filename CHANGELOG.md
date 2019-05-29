@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.25] - 2019-05-29
+
+### Other
+
+- Removed src/ from .npmignore
+
 ## [1.0.24] - 2019-05-24
 
 ### Removed
