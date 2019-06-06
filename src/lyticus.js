@@ -170,11 +170,14 @@ export default class Lyticus {
     // Referrer
     let referrer = undefined;
     if (!this.referrerTracked) {
+      const isLocalhostReferrer = document.referrer.match(
+        /(^\w+:|^)\/\/localhost:/
+      );
       const isExternalReferrer =
         document.referrer.indexOf(
           window.location.protocol + "//" + window.location.hostname
         ) < 0;
-      if (isExternalReferrer) {
+      if (!isLocalhostReferrer && isExternalReferrer) {
         referrer = document.referrer;
         this.referrerTracked = true;
       }
