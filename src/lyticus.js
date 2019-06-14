@@ -44,6 +44,7 @@ export default class Lyticus {
     this.referrerTracked = false;
     this.urlReferrerTracked = false;
     this.events = [];
+    this.previousPath = null;
     const safeConfig = JSON.parse(
       JSON.stringify({
         ...this,
@@ -207,7 +208,10 @@ export default class Lyticus {
     if (urlReferrer && urlReferrer.length) {
       event.urlReferrer = urlReferrer;
     }
-    this.track(event);
+    if(event.path !== this.previousPath) {
+      this.previousPath = event.path;
+      this.track(event);
+    }
   }
 
   trackClick(value, path) {
