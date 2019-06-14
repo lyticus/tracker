@@ -208,7 +208,7 @@ export default class Lyticus {
     if (urlReferrer && urlReferrer.length) {
       event.urlReferrer = urlReferrer;
     }
-    if(event.path !== this.previousPath) {
+    if (event.path !== this.previousPath) {
       this.previousPath = event.path;
       this.track(event);
     }
