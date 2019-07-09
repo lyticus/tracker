@@ -20,18 +20,21 @@
   },
   "main": "dist/lyticus.js",
   "scripts": {
-    "build": "webpack --mode production --progress"
+    "build": "webpack --mode production --progress",
+    "test": "jest"
   },
   "husky": {},
   "dependencies": {
     "custom-event-polyfill": "^1.0.7",
     "js-cookie": "^2.2.0",
+    "lodash": "^4.17.11",
     "url-search-params-polyfill": "^6.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.5.0",
     "@babel/preset-env": "^7.5.2",
     "babel-loader": "^8.0.6",
+    "jest": "^24.8.0",
     "webpack": "^4.35.3",
     "webpack-cli": "^3.3.5"
   },

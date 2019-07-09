@@ -2,6 +2,7 @@ import "custom-event-polyfill";
 import "url-search-params-polyfill";
 
 import { version } from "../package.json";
+import { isObject } from "lodash";
 
 import Cookies from "js-cookie";
 
@@ -33,7 +34,10 @@ const blankSession = () => {
 export default class Lyticus {
   constructor(websiteId, options = {}) {
     if (!websiteId) {
-      console.error("Must provide a id");
+      throw new Error("websiteId must be defined");
+    }
+    if (!isObject(options)) {
+      throw new Error("options must be an object");
     }
     this.version = version;
     this.websiteId = websiteId;
