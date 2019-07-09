@@ -2,7 +2,7 @@ import "custom-event-polyfill";
 import "url-search-params-polyfill";
 
 import { version } from "../package.json";
-import { isObject } from "lodash";
+import isObject from "lodash.isobject";
 
 import Cookies from "js-cookie";
 

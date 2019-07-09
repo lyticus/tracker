@@ -27,7 +27,7 @@
   "dependencies": {
     "custom-event-polyfill": "^1.0.7",
     "js-cookie": "^2.2.0",
-    "lodash": "^4.17.11",
+    "lodash.isobject": "^3.0.2",
     "url-search-params-polyfill": "^6.0.0"
   },
   "devDependencies": {
