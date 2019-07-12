@@ -273,6 +273,19 @@ export default class Lyticus {
     return historyModeEnabled;
   }
 
+  clickTracker() {
+    return event => {
+      for (let i = 0; i < event.path.length; i++) {
+        const element = event.path[i];
+        const dataset = element.dataset;
+        if (dataset && dataset.trackClick) {
+          this.trackClick(dataset.trackClick);
+          break;
+        }
+      }
+    };
+  }
+
   getEvents() {
     return this.events;
   }

@@ -7,22 +7,20 @@
     <title>Example</title>
     <script src="./dist/lyticus.js"></script>
     <script>
-      document.addEventListener("lyticus:configuration", function(e) {
-        console.log("lyticus:configuration", e.detail);
-      });
-      document.addEventListener("lyticus:track", function(e) {
-        console.log("lyticus:track", e.detail);
-      });
       var lyticus = new Lyticus("your-website-id", {
         development: true
       });
+      document.addEventListener("click", lyticus.clickTracker());
       lyticus.trackNavigator();
       lyticus.trackPage();
-      console.log(lyticus.getEvents());
-      console.log(lyticus.getVersion());
     </script>
   </head>
   <body>
-    Open browser console to view event.
+    <button onclick="lyticus.trackClick('buy-button')">
+      Buy
+    </button>
+    <button data-track-click="sell-button">
+      Sell
+    </button>
   </body>
 </html>
