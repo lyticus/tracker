@@ -28,11 +28,11 @@
     "custom-event-polyfill": "^1.0.7",
     "js-cookie": "^2.2.0",
     "lodash.isobject": "^3.0.2",
-    "url-search-params-polyfill": "^6.0.0"
+    "url-search-params-polyfill": "^7.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.5.0",
-    "@babel/preset-env": "^7.5.3",
+    "@babel/core": "^7.5.4",
+    "@babel/preset-env": "^7.5.4",
     "babel-loader": "^8.0.6",
     "jest": "^24.8.0",
     "webpack": "^4.35.3",
