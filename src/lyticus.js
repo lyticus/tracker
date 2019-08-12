@@ -275,13 +275,18 @@ export default class Lyticus {
 
   clickTracker() {
     return event => {
-      for (let i = 0; i < event.path.length; i++) {
-        const element = event.path[i];
-        const dataset = element.dataset;
-        if (dataset && dataset.trackClick) {
-          this.trackClick(dataset.trackClick);
-          break;
+      const path = event.path || (event.composedPath && event.composedPath());
+      if (path) {
+        for (let i = 0; i < path.length; i++) {
+          const element = path[i];
+          const dataset = element.dataset;
+          if (dataset && dataset.trackClick) {
+            this.trackClick(dataset.trackClick);
+            break;
+          }
         }
+      } else {
+        // This browser doesn't supply path information
       }
     };
   }
