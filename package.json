@@ -7,8 +7,8 @@
   "license": "MIT",
   "keywords": [
     "analytics",
-    "tracking",
-    "lyticus"
+    "lyticus",
+    "tracking"
   ],
   "homepage": "https://github.com/byteboomers/lyticus-tracker#readme",
   "repository": {
@@ -34,9 +34,9 @@
     "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "babel-loader": "^8.0.6",
-    "jest": "^24.8.0",
-    "webpack": "^4.39.1",
-    "webpack-cli": "^3.3.6"
+    "jest": "^24.9.0",
+    "webpack": "^4.39.2",
+    "webpack-cli": "^3.3.7"
   },
   "peerDependencies": {}
 }
