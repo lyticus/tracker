@@ -1,4 +1,4 @@
-import Lyticus from "./lyticus";
+import Lyticus from "../src/index";
 
 const TEST_WEBSITE_ID = "test-website-id";
 
