@@ -10,6 +10,9 @@
       var lyticus = new Lyticus("your-website-id", {
         development: true
       });
+      document.addEventListener("lyticus:track", e => {
+        console.log(e.detail);
+      });
       document.addEventListener("click", lyticus.clickTracker());
       lyticus.trackNavigator();
       lyticus.trackPage();

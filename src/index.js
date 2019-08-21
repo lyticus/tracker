@@ -6,6 +6,14 @@ import isObject from "lodash.isobject";
 
 import Cookies from "js-cookie";
 
+import {
+  isBodyLoaded,
+  isDoNotTrack,
+  isExternalReferrer,
+  isLocalhostReferrer,
+  isVisibilityPrerendered
+} from "./utils";
+
 const DEFAULT_OPTIONS = {
   cookies: true,
   development: false,
@@ -67,22 +75,18 @@ export default class Lyticus {
 
   track(event, callback) {
     // If body is not loaded, re-try on DOMContentLoaded
-    if (document.body === null) {
+    if (!isBodyLoaded(window)) {
       document.addEventListener("DOMContentLoaded", () => {
         this.track(event, callback);
       });
       return;
     }
     // Skip if doNotTrack not track is detected
-    const isDoNotTrack =
-      "doNotTrack" in navigator && navigator.doNotTrack === "1";
-    if (isDoNotTrack) {
+    if (isDoNotTrack(window)) {
       return;
     }
     // Skip if this is a prerendered page
-    const isPrerenderedPage =
-      "visibilityState" in document && document.visibilityState === "prerender";
-    if (isPrerenderedPage) {
+    if (isVisibilityPrerendered(window)) {
       return;
     }
     // Decorate the event with the website id and time
@@ -175,14 +179,7 @@ export default class Lyticus {
     // Referrer
     let referrer = undefined;
     if (!this.referrerTracked) {
-      const isLocalhostReferrer = document.referrer.match(
-        /(^\w+:|^)\/\/localhost:/
-      );
-      const isExternalReferrer =
-        document.referrer.indexOf(
-          window.location.protocol + "//" + window.location.hostname
-        ) < 0;
-      if (!isLocalhostReferrer && isExternalReferrer) {
+      if (!isLocalhostReferrer(window) && isExternalReferrer(window)) {
         referrer = document.referrer;
         this.referrerTracked = true;
       }
