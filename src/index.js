@@ -1,7 +1,13 @@
 import { version } from "../package.json";
 import isObject from "lodash.isobject";
 
-import { dispatch, CONFIGURATION_EVENT, TRACK_EVENT } from "./event";
+import {
+  dispatch,
+  withEventDispatcher,
+  CONFIGURATION_EVENT,
+  PUSH_STATE_EVENT,
+  TRACK_EVENT
+} from "./event";
 
 import {
   getLifetimeData,
@@ -175,37 +181,17 @@ export default class Lyticus {
   }
 
   startHistoryMode() {
-    let historyModeEnabled = false;
-    if (!Event) {
-      console.error("Unable to access Event");
-    } else if (!window.dispatchEvent) {
-      console.error("Unable to access window.dispatchEvent");
-    } else if (!window.history) {
-      console.error("Unable to access window.history");
-    } else if (!window.history.pushState) {
-      console.error("Unable to access window.history.pushState");
-    } else {
-      const stateListener = function(type) {
-        let original = window.history[type];
-        return function() {
-          const rv = original.apply(this, arguments);
-          const event = new Event(type);
-          event.arguments = arguments;
-          window.dispatchEvent(event);
-          return rv;
-        };
-      };
-      window.history.pushState = stateListener("pushState");
-      window.addEventListener("pushState", () => {
+    if (window.history && window.history.pushState) {
+      window.history.pushState = withEventDispatcher(window.history.pushState)(
+        PUSH_STATE_EVENT
+      );
+      window.addEventListener(PUSH_STATE_EVENT, () => {
         this.trackPage();
       });
       this.trackPage();
-      historyModeEnabled = true;
+      return true;
     }
-    if (!historyModeEnabled) {
-      console.error("History mode could not be enabled");
-    }
-    return historyModeEnabled;
+    return false;
   }
 
   clickTracker() {
