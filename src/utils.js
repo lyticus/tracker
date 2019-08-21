@@ -1,3 +1,18 @@
+import "url-search-params-polyfill";
+
+export function getUrlReferrer(window) {
+  const candidates = ["referrer", "ref", "source", "utm_source"];
+  const queryParameters = new URLSearchParams(window.location.search);
+  for (let i = 0; i < candidates.length; i++) {
+    const candidate = candidates[i];
+    const value = queryParameters.get(candidate);
+    if (value) {
+      return value;
+    }
+  }
+  return null;
+}
+
 export function isBodyLoaded(window) {
   return !!window.document.body;
 }

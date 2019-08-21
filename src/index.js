@@ -1,5 +1,4 @@
 import "custom-event-polyfill";
-import "url-search-params-polyfill";
 
 import { version } from "../package.json";
 import isObject from "lodash.isobject";
@@ -12,6 +11,7 @@ import {
 } from "./cookie";
 
 import {
+  getUrlReferrer,
   isBodyLoaded,
   isDoNotTrack,
   isExternalReferrer,
@@ -142,37 +142,24 @@ export default class Lyticus {
       path: path || this.options.getPath()
     };
     // Referrer
-    let referrer = undefined;
-    if (!this.referrerTracked) {
-      if (!isLocalhostReferrer(window) && isExternalReferrer(window)) {
-        referrer = document.referrer;
+    if (
+      !this.referrerTracked &&
+      !isLocalhostReferrer(window) &&
+      isExternalReferrer(window)
+    ) {
+      const referrer = document.referrer;
+      if (referrer && referrer.length) {
+        event.referrer = referrer;
         this.referrerTracked = true;
       }
     }
     // URL referrer
-    let urlReferrer = undefined;
     if (!this.urlReferrerTracked) {
-      const referrerQueryParameters = [
-        "referrer",
-        "ref",
-        "source",
-        "utm_source"
-      ];
-      const queryParameters = new URLSearchParams(window.location.search);
-      for (let i = 0; i < referrerQueryParameters.length; i++) {
-        const referrerQueryParameter = referrerQueryParameters[i];
-        const queryParameterValue = queryParameters.get(referrerQueryParameter);
-        if (queryParameterValue) {
-          urlReferrer = queryParameterValue;
-          this.urlReferrerTracked = true;
-        }
+      const urlReferrer = getUrlReferrer(window);
+      if (urlReferrer && urlReferrer.length) {
+        event.urlReferrer = urlReferrer;
+        this.urlReferrerTracked = true;
       }
-    }
-    if (referrer && referrer.length) {
-      event.referrer = referrer;
-    }
-    if (urlReferrer && urlReferrer.length) {
-      event.urlReferrer = urlReferrer;
     }
     if (event.path !== this.previousPath) {
       this.previousPath = event.path;
