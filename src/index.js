@@ -1,7 +1,7 @@
-import "custom-event-polyfill";
-
 import { version } from "../package.json";
 import isObject from "lodash.isobject";
+
+import { dispatch, CONFIGURATION_EVENT, TRACK_EVENT } from "./event";
 
 import {
   getLifetimeData,
@@ -54,11 +54,7 @@ export default class Lyticus {
       })
     );
     window.__LYTICUS__ = safeConfig;
-    document.dispatchEvent(
-      new CustomEvent("lyticus:configuration", {
-        detail: safeConfig
-      })
-    );
+    dispatch(CONFIGURATION_EVENT, safeConfig);
   }
 
   track(event, callback) {
@@ -110,9 +106,7 @@ export default class Lyticus {
       sendToBeacon(decoratedEvent);
     }
     this.events.push(decoratedEvent);
-    document.dispatchEvent(
-      new CustomEvent("lyticus:track", { detail: decoratedEvent })
-    );
+    dispatch(TRACK_EVENT, decoratedEvent);
     if (callback) {
       setTimeout(callback, 300);
     }
