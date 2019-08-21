@@ -31,7 +31,7 @@ const DEFAULT_OPTIONS = {
   cookies: true,
   development: false,
   getPath: () => window.location.pathname,
-  callbackDelay: 300 //TODO: not-documented
+  callbackDelay: 300 //TODO: not documented
 };
 
 export default class Lyticus {
@@ -174,12 +174,13 @@ export default class Lyticus {
         path: path || this.options.getPath(),
         value: value
       },
-      function() {
+      function callback() {
         document.location = url;
       }
     );
   }
 
+  //TODO: return value not documented
   startHistoryMode() {
     if (window.history && window.history.pushState) {
       window.history.pushState = withEventDispatcher(window.history.pushState)(
@@ -192,7 +193,7 @@ export default class Lyticus {
     return false;
   }
 
-  //TODO: not-documented
+  //TODO: not documented
   stopHistoryMode() {
     window.removeEventListener(PUSH_STATE_EVENT, this.trackPage);
   }
