@@ -24,7 +24,8 @@ import {
 const DEFAULT_OPTIONS = {
   cookies: true,
   development: false,
-  getPath: () => window.location.pathname
+  getPath: () => window.location.pathname,
+  callbackDelay: 300
 };
 
 export default class Lyticus {
@@ -108,7 +109,7 @@ export default class Lyticus {
     this.events.push(decoratedEvent);
     dispatch(TRACK_EVENT, decoratedEvent);
     if (callback) {
-      setTimeout(callback, 300);
+      setTimeout(callback, this.options.callbackDelay);
     }
   }
 
