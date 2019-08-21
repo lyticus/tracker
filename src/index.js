@@ -16,7 +16,8 @@ import {
   isDoNotTrack,
   isExternalReferrer,
   isLocalhostReferrer,
-  isVisibilityPrerendered
+  isVisibilityPrerendered,
+  sendToBeacon
 } from "./utils";
 
 const DEFAULT_OPTIONS = {
@@ -108,12 +109,9 @@ export default class Lyticus {
       // We save the session data regardless of whether its content was updated, to keep track of activity and update its expiry accordingly
       saveSessionData(sessionData);
     }
-    // POST to beacon if not in development mode
+    // Send event to beacon
     if (!this.options.development) {
-      const xhr = new XMLHttpRequest();
-      xhr.open("POST", "https://beacon.lyticus.com/event");
-      xhr.setRequestHeader("Content-Type", "application/json");
-      xhr.send(JSON.stringify(decoratedEvent));
+      sendToBeacon(decoratedEvent);
     }
     // Add event to events array
     this.events.push(decoratedEvent);

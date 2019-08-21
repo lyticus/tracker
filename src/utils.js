@@ -37,3 +37,10 @@ export function isVisibilityPrerendered(window) {
     window.document.visibilityState == "prerender"
   );
 }
+
+export function sendToBeacon(data) {
+  const xhr = new XMLHttpRequest();
+  xhr.open("POST", "https://beacon.lyticus.com/event");
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.send(JSON.stringify(data));
+}
