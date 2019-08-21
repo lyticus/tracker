@@ -4,7 +4,12 @@ import "url-search-params-polyfill";
 import { version } from "../package.json";
 import isObject from "lodash.isobject";
 
-import Cookies from "js-cookie";
+import {
+  getLifetimeData,
+  saveLifetimeData,
+  getSessionData,
+  saveSessionData
+} from "./cookie";
 
 import {
   isBodyLoaded,
@@ -18,25 +23,6 @@ const DEFAULT_OPTIONS = {
   cookies: true,
   development: false,
   getPath: () => window.location.pathname
-};
-
-const blankLifetime = () => {
-  return {
-    tracked: false
-  };
-};
-
-const blankSession = () => {
-  return {
-    id:
-      Math.random()
-        .toString(36)
-        .substring(2, 15) +
-      Math.random()
-        .toString(36)
-        .substring(2, 15),
-    events: []
-  };
 };
 
 export default class Lyticus {
@@ -98,33 +84,14 @@ export default class Lyticus {
     // Decorate the event with cookie information
     if (this.options.cookies) {
       // Lifetime
-      let lifetimeData = Cookies.get("_lyticus_lifetime");
-      if (!lifetimeData) {
-        lifetimeData = blankLifetime();
-      }
-      try {
-        lifetimeData = JSON.parse(lifetimeData);
-      } catch (error) {
-        lifetimeData = blankLifetime();
-      }
+      const lifetimeData = getLifetimeData();
       if (!lifetimeData.tracked) {
         decoratedEvent.newVisitor = true;
         lifetimeData.tracked = true;
-        const in2Years = 365 * 2;
-        Cookies.set("_lyticus_lifetime", JSON.stringify(lifetimeData), {
-          expires: in2Years
-        });
+        saveLifetimeData(lifetimeData);
       }
       // Session
-      let sessionData = Cookies.get("_lyticus_session");
-      if (!sessionData) {
-        sessionData = blankSession();
-      }
-      try {
-        sessionData = JSON.parse(sessionData);
-      } catch (error) {
-        sessionData = blankSession();
-      }
+      const sessionData = getSessionData();
       decoratedEvent.sessionId = sessionData.id;
       if (
         event.type === "page" &&
@@ -138,10 +105,8 @@ export default class Lyticus {
           path: decoratedEvent.path
         });
       }
-      const in30Minutes = 1 / 48;
-      Cookies.set("_lyticus_session", JSON.stringify(sessionData), {
-        expires: in30Minutes
-      });
+      // We save the session data regardless of whether its content was updated, to keep track of activity and update its expiry accordingly
+      saveSessionData(sessionData);
     }
     // POST to beacon if not in development mode
     if (!this.options.development) {
