@@ -16,6 +16,10 @@
       document.addEventListener("click", lyticus.clickTracker());
       lyticus.trackNavigator();
       lyticus.trackPage();
+      const historyModeStarted = lyticus.startHistoryMode();
+      console.log("History mode started:", historyModeStarted);
+      lyticus.stopHistoryMode();
+      console.log("History mode stopped");
     </script>
   </head>
   <body>
