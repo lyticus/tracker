@@ -30,9 +30,10 @@ import {
 const DEFAULT_OPTIONS = {
   cookies: true,
   development: false,
-  getPath: () => window.location.pathname,
-  callbackDelay: 300 //TODO: not documented
+  getPath: () => window.location.pathname
 };
+
+/* TODO */
 
 export default class Lyticus {
   constructor(websiteId, options = {}) {
@@ -115,9 +116,11 @@ export default class Lyticus {
     this.events.push(decoratedEvent);
     dispatch(TRACK_EVENT, decoratedEvent);
     if (callback) {
-      setTimeout(callback, this.options.callbackDelay);
+      setTimeout(callback, 300);
     }
   }
+
+  /* TODO */
 
   trackNavigator() {
     this.track({
