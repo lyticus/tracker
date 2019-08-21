@@ -133,7 +133,10 @@ export default class Lyticus {
       type: "page",
       path: path || this.options.getPath()
     };
-
+    if (event.path === this.previousPath) {
+      return;
+    }
+    this.previousPath = event.path;
     // Referrer
     if (
       !this.referrerTracked &&
@@ -154,10 +157,7 @@ export default class Lyticus {
         this.urlReferrerTracked = true;
       }
     }
-    if (event.path !== this.previousPath) {
-      this.previousPath = event.path;
-      this.track(event);
-    }
+    this.track(event);
   }
 
   trackClick(value, path) {
