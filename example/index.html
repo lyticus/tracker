@@ -7,6 +7,9 @@
     <title>Example</title>
     <script src="../dist/lyticus.js"></script>
     <script>
+      document.addEventListener("lyticus:configuration", e => {
+        console.log(e.detail);
+      });
       var lyticus = new Lyticus("your-website-id", {
         development: true
       });

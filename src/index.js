@@ -1,4 +1,5 @@
 import { version } from "../package.json";
+
 import isObject from "lodash.isobject";
 
 import {
@@ -33,8 +34,6 @@ const DEFAULT_OPTIONS = {
   getPath: () => window.location.pathname
 };
 
-/* TODO */
-
 export default class Lyticus {
   constructor(websiteId, options = {}) {
     if (!websiteId) {
@@ -43,26 +42,20 @@ export default class Lyticus {
     if (!isObject(options)) {
       throw new Error("options must be an object");
     }
-    this.version = version;
-    this.websiteId = websiteId;
+    this.state = {
+      version,
+      websiteId,
+      referrerTracked: false,
+      urlReferrerTracked: false,
+      events: [],
+      previousPath: null
+    };
     this.options = {
       ...DEFAULT_OPTIONS,
       ...options
     };
-    this.referrerTracked = false;
-    this.urlReferrerTracked = false;
-    this.events = [];
-    this.previousPath = null;
-    const safeConfig = JSON.parse(
-      JSON.stringify({
-        ...this,
-        events: undefined,
-        referrerTracked: undefined,
-        urlReferrerTracked: undefined
-      })
-    );
-    window.__LYTICUS__ = safeConfig;
-    dispatch(CONFIGURATION_EVENT, safeConfig);
+    window.__LYTICUS__ = this.state;
+    dispatch(CONFIGURATION_EVENT, this.state);
   }
 
   track(event, callback) {
@@ -113,14 +106,12 @@ export default class Lyticus {
     if (!this.options.development) {
       sendToBeacon(decoratedEvent);
     }
-    this.events.push(decoratedEvent);
+    this.state.events.push(decoratedEvent);
     dispatch(TRACK_EVENT, decoratedEvent);
     if (callback) {
       setTimeout(callback, 300);
     }
   }
-
-  /* TODO */
 
   trackNavigator() {
     this.track({
@@ -136,28 +127,28 @@ export default class Lyticus {
       type: "page",
       path: path || this.options.getPath()
     };
-    if (event.path === this.previousPath) {
+    if (event.path === this.state.previousPath) {
       return;
     }
-    this.previousPath = event.path;
+    this.state.previousPath = event.path;
     // Referrer
     if (
-      !this.referrerTracked &&
+      !this.state.referrerTracked &&
       !isLocalhostReferrer(window) &&
       isExternalReferrer(window)
     ) {
       const referrer = document.referrer;
       if (referrer && referrer.length) {
         event.referrer = referrer;
-        this.referrerTracked = true;
+        this.state.referrerTracked = true;
       }
     }
     // URL referrer
-    if (!this.urlReferrerTracked) {
+    if (!this.state.urlReferrerTracked) {
       const urlReferrer = getUrlReferrer(window);
       if (urlReferrer && urlReferrer.length) {
         event.urlReferrer = urlReferrer;
-        this.urlReferrerTracked = true;
+        this.state.urlReferrerTracked = true;
       }
     }
     this.track(event);
@@ -216,10 +207,10 @@ export default class Lyticus {
   }
 
   getEvents() {
-    return this.events;
+    return this.state.events;
   }
 
   getVersion() {
-    return this.version;
+    return this.state.version;
   }
 }
