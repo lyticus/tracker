@@ -215,15 +215,12 @@ export default class Lyticus {
 
   clickTracker() {
     return event => {
-      const path = getEventPath(event);
-      if (path) {
-        for (let i = 0; i < path.length; i++) {
-          const element = path[i];
-          const dataset = element.dataset;
-          if (dataset && dataset.trackClick) {
-            this.trackClick(dataset.trackClick);
-            break;
-          }
+      const path = getEventPath(event) || [];
+      for (let element of path) {
+        const dataset = element.dataset;
+        if (dataset && dataset.trackClick) {
+          this.trackClick(dataset.trackClick);
+          break;
         }
       }
     };
