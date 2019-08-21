@@ -71,43 +71,39 @@ export default class Lyticus {
     if (isVisibilityPrerendered(window)) {
       return;
     }
-    // Decorate the event with the website id and time
-    let decoratedEvent = {
+    event = {
       ...event,
-      websiteId: this.websiteId,
+      websiteId: this.state.websiteId,
       time: new Date().getTime()
     };
-    // Decorate the event with cookie information
     if (this.options.cookies) {
-      // Lifetime
-      const lifetimeData = getLifetimeData();
-      if (!lifetimeData.tracked) {
-        decoratedEvent.newVisitor = true;
-        lifetimeData.tracked = true;
-        saveLifetimeData(lifetimeData);
+      // Lifetime cookie
+      const lifetime = getLifetimeData();
+      if (!lifetime.tracked) {
+        event.newVisitor = true;
+        lifetime.tracked = true;
+        saveLifetimeData(lifetime);
       }
-      // Session
-      const sessionData = getSessionData();
-      decoratedEvent.sessionId = sessionData.id;
+      // Session cookie
+      const session = getSessionData();
+      event.sessionId = session.id;
       if (
         event.type === "page" &&
-        !sessionData.events.find(
-          e => e.type === "page" && e.path == decoratedEvent.path
-        )
+        !session.events.find(e => e.type === "page" && e.path == event.path)
       ) {
-        decoratedEvent.unique = true;
-        sessionData.events.push({
-          type: decoratedEvent.type,
-          path: decoratedEvent.path
+        event.unique = true;
+        session.events.push({
+          type: event.type,
+          path: event.path
         });
       }
-      saveSessionData(sessionData); // Always save session data (bump expiry)
+      saveSessionData(session); // Always save session data (bump expiry)
     }
     if (!this.options.development) {
-      sendToBeacon(decoratedEvent);
+      sendToBeacon(event);
     }
-    this.state.events.push(decoratedEvent);
-    dispatch(TRACK_EVENT, decoratedEvent);
+    this.state.events.push(event);
+    dispatch(TRACK_EVENT, event);
     if (callback) {
       setTimeout(callback, 300);
     }
@@ -175,7 +171,6 @@ export default class Lyticus {
     );
   }
 
-  //TODO: return value not documented
   startHistoryMode() {
     if (window.history && window.history.pushState) {
       window.history.pushState = withEventDispatcher(window.history.pushState)(
@@ -188,7 +183,6 @@ export default class Lyticus {
     return false;
   }
 
-  //TODO: not documented
   stopHistoryMode() {
     window.removeEventListener(PUSH_STATE_EVENT, this.trackPage);
   }
