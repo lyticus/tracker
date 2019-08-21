@@ -11,6 +11,7 @@ import {
 } from "./cookie";
 
 import {
+  getEventPath,
   getUrlReferrer,
   isBodyLoaded,
   isDoNotTrack,
@@ -222,7 +223,7 @@ export default class Lyticus {
 
   clickTracker() {
     return event => {
-      const path = event.path || (event.composedPath && event.composedPath());
+      const path = getEventPath(event);
       if (path) {
         for (let i = 0; i < path.length; i++) {
           const element = path[i];

@@ -1,3 +1,24 @@
+export function getEventPath(event) {
+  return (
+    (event.composedPath && event.composedPath()) ||
+    event.path ||
+    (function composePath(e) {
+      const path = [];
+      let el = e.target;
+      while (el) {
+        path.push(el);
+        if (el.tagName === "HTML") {
+          path.push(document);
+          path.push(window);
+          return path;
+        }
+        el = el.parentElement;
+      }
+      return path;
+    })(event)
+  );
+}
+
 import "url-search-params-polyfill";
 
 export function getUrlReferrer(window) {
