@@ -133,6 +133,7 @@ export default class Lyticus {
       type: "page",
       path: path || this.options.getPath()
     };
+
     // Referrer
     if (
       !this.referrerTracked &&
@@ -163,7 +164,7 @@ export default class Lyticus {
     this.track({
       type: "click",
       path: path || this.options.getPath(),
-      value: value
+      value
     });
   }
 
@@ -172,7 +173,7 @@ export default class Lyticus {
       {
         type: "click",
         path: path || this.options.getPath(),
-        value: value
+        value
       },
       function callback() {
         document.location = url;
