@@ -62,18 +62,15 @@ export default class Lyticus {
   }
 
   track(event, callback) {
-    // If body is not loaded, re-try on DOMContentLoaded
     if (!isBodyLoaded(window)) {
       document.addEventListener("DOMContentLoaded", () => {
         this.track(event, callback);
       });
       return;
     }
-    // Skip if doNotTrack not track is detected
     if (isDoNotTrack(window)) {
       return;
     }
-    // Skip if this is a prerendered page
     if (isVisibilityPrerendered(window)) {
       return;
     }
@@ -107,20 +104,15 @@ export default class Lyticus {
           path: decoratedEvent.path
         });
       }
-      // We save the session data regardless of whether its content was updated, to keep track of activity and update its expiry accordingly
-      saveSessionData(sessionData);
+      saveSessionData(sessionData); // Always save session data (bump expiry)
     }
-    // Send event to beacon
     if (!this.options.development) {
       sendToBeacon(decoratedEvent);
     }
-    // Add event to events array
     this.events.push(decoratedEvent);
-    // Dispatch custom event
     document.dispatchEvent(
       new CustomEvent("lyticus:track", { detail: decoratedEvent })
     );
-    // Invoke callback after 300ms
     if (callback) {
       setTimeout(callback, 300);
     }
@@ -233,8 +225,6 @@ export default class Lyticus {
             break;
           }
         }
-      } else {
-        // This browser doesn't supply path information
       }
     };
   }
