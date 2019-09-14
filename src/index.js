@@ -60,9 +60,9 @@ export default class Lyticus {
 
   track(event, callback) {
     if (!isBodyLoaded(window)) {
-      document.addEventListener("DOMContentLoaded", () => {
-        this.track(event, callback);
-      });
+      document.addEventListener("DOMContentLoaded", () =>
+        this.track(event, callback)
+      );
       return;
     }
     if (isDoNotTrack(window)) {
@@ -176,7 +176,7 @@ export default class Lyticus {
       window.history.pushState = withEventDispatcher(window.history.pushState)(
         PUSH_STATE_EVENT
       );
-      window.addEventListener(PUSH_STATE_EVENT, this.trackPage);
+      window.addEventListener(PUSH_STATE_EVENT, () => this.trackPage);
       this.trackPage();
       return true;
     }
@@ -184,7 +184,8 @@ export default class Lyticus {
   }
 
   stopHistoryMode() {
-    window.removeEventListener(PUSH_STATE_EVENT, this.trackPage);
+    // TODO
+    console.warn("Stopping history mode is currently not supported");
   }
 
   clickTracker() {
