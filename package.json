@@ -19,7 +19,6 @@
     "url": "https://github.com/byteboomers/lyticus-tracker/issues"
   },
   "main": "dist/index.js",
-  "types": "dist/types.d.ts",
   "files": [
     "dist",
     "src"
