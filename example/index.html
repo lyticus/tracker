@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Example</title>
-    <script src="../dist/lyticus.js"></script>
+    <script src="../dist/index.js"></script>
     <script>
-      document.addEventListener("lyticus:configuration", e => {
+      document.addEventListener("lyticus:configuration", (e) => {
         console.log(e.detail);
       });
       var lyticus = new Lyticus("your-website-id", {
-        development: true
+        development: true,
       });
-      document.addEventListener("lyticus:track", e => {
+      document.addEventListener("lyticus:track", (e) => {
         console.log(e.detail);
       });
       document.addEventListener("click", lyticus.clickTracker());
@@ -26,11 +26,7 @@
     </script>
   </head>
   <body>
-    <button onclick="lyticus.trackClick('buy-button')">
-      Buy
-    </button>
-    <button data-track-click="sell-button">
-      Sell
-    </button>
+    <button onclick="lyticus.trackClick('buy-button')">Buy</button>
+    <button data-track-click="sell-button">Sell</button>
   </body>
 </html>

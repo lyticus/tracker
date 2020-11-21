@@ -1,20 +1,12 @@
-import { version } from "../package.json";
-
 import isObject from "lodash.isobject";
 
-import {
-  dispatch,
-  withEventDispatcher,
-  CONFIGURATION_EVENT,
-  PUSH_STATE_EVENT,
-  TRACK_EVENT
-} from "./event";
+import { dispatch, withEventDispatcher } from "./event";
 
 import {
   getLifetimeData,
-  saveLifetimeData,
   getSessionData,
-  saveSessionData
+  saveLifetimeData,
+  saveSessionData,
 } from "./cookie";
 
 import {
@@ -24,18 +16,30 @@ import {
   isDoNotTrack,
   isExternalReferrer,
   isLocalhostReferrer,
-  isVisibilityPrerendered,
-  sendToBeacon
+  sendToBeacon,
 } from "./utils";
+
+import {
+  DecoratedEvent,
+  CustomEventType,
+  Options,
+  State,
+  ClickEvent,
+  NavigatorEvent,
+  PageViewEvent,
+} from "./types";
 
 const DEFAULT_OPTIONS = {
   cookies: true,
   development: false,
-  getPath: () => window.location.pathname
+  getPath: () => window.location.pathname,
 };
 
 export default class Lyticus {
-  constructor(websiteId, options = {}) {
+  options: Options;
+  state: State;
+
+  constructor(websiteId: string, options: Partial<Options> = {}) {
     if (!websiteId) {
       throw new Error("websiteId must be defined");
     }
@@ -43,22 +47,25 @@ export default class Lyticus {
       throw new Error("options must be an object");
     }
     this.state = {
-      version,
       websiteId,
       referrerTracked: false,
       urlReferrerTracked: false,
       events: [],
-      previousPath: null
+      previousPath: null,
     };
     this.options = {
       ...DEFAULT_OPTIONS,
-      ...options
+      ...options,
     };
+    // @ts-ignore
     window.__LYTICUS__ = this.state;
-    dispatch(CONFIGURATION_EVENT, this.state);
+    dispatch(CustomEventType.CONFIGURATION_EVENT, this.state);
   }
 
-  track(event, callback) {
+  track(
+    event: ClickEvent | NavigatorEvent | PageViewEvent,
+    callback?: { (): void; (...args: any[]): void }
+  ) {
     if (!isBodyLoaded(window)) {
       document.addEventListener("DOMContentLoaded", () =>
         this.track(event, callback)
@@ -68,42 +75,44 @@ export default class Lyticus {
     if (isDoNotTrack(window)) {
       return;
     }
-    if (isVisibilityPrerendered(window)) {
-      return;
-    }
-    event = {
+    const decoratedEvent: DecoratedEvent = {
       ...event,
+      newVisitor: false,
+      time: new Date().getTime(),
+      unique: false,
       websiteId: this.state.websiteId,
-      time: new Date().getTime()
     };
     if (this.options.cookies) {
       // Lifetime cookie
       const lifetime = getLifetimeData();
       if (!lifetime.tracked) {
-        event.newVisitor = true;
+        decoratedEvent.newVisitor = true;
         lifetime.tracked = true;
         saveLifetimeData(lifetime);
       }
       // Session cookie
       const session = getSessionData();
-      event.sessionId = session.id;
+      decoratedEvent.sessionId = session.id;
       if (
-        event.type === "page" &&
-        !session.events.find(e => e.type === "page" && e.path == event.path)
+        decoratedEvent.type === "page" &&
+        !session.events.find(
+          (e: { type: string; path: string }) =>
+            e.type === "page" && e.path === decoratedEvent.path
+        )
       ) {
-        event.unique = true;
+        decoratedEvent.unique = true;
         session.events.push({
-          type: event.type,
-          path: event.path
+          type: decoratedEvent.type,
+          path: decoratedEvent.path,
         });
       }
       saveSessionData(session); // Always save session data (bump expiry)
     }
     if (!this.options.development) {
-      sendToBeacon(event);
+      sendToBeacon(decoratedEvent);
     }
-    this.state.events.push(event);
-    dispatch(TRACK_EVENT, event);
+    this.state.events.push(decoratedEvent);
+    dispatch(CustomEventType.TRACK_EVENT, decoratedEvent);
     if (callback) {
       setTimeout(callback, 300);
     }
@@ -114,14 +123,14 @@ export default class Lyticus {
       type: "navigator",
       screenWidth: window.innerWidth,
       language: window.navigator.language,
-      userAgent: window.navigator.userAgent
+      userAgent: window.navigator.userAgent,
     });
   }
 
-  trackPage(path) {
-    const event = {
+  trackPage(path?: string) {
+    const event: PageViewEvent = {
       type: "page",
-      path: path || this.options.getPath()
+      path: path || this.options.getPath(),
     };
     if (event.path === this.state.previousPath) {
       return;
@@ -150,23 +159,23 @@ export default class Lyticus {
     this.track(event);
   }
 
-  trackClick(value, path) {
+  trackClick(value: string, path?: string) {
     this.track({
       type: "click",
       path: path || this.options.getPath(),
-      value
+      value,
     });
   }
 
-  trackOutboundClick(value, url, path) {
+  trackOutboundClick(value: string, url: string, path: string) {
     this.track(
       {
         type: "click",
         path: path || this.options.getPath(),
-        value
+        value,
       },
       function callback() {
-        document.location = url;
+        window.location.href = url;
       }
     );
   }
@@ -174,9 +183,12 @@ export default class Lyticus {
   startHistoryMode() {
     if (window.history && window.history.pushState) {
       window.history.pushState = withEventDispatcher(window.history.pushState)(
-        PUSH_STATE_EVENT
+        CustomEventType.PUSH_STATE_EVENT
       );
-      window.addEventListener(PUSH_STATE_EVENT, () => this.trackPage);
+      window.addEventListener(
+        CustomEventType.PUSH_STATE_EVENT,
+        () => this.trackPage
+      );
       this.trackPage();
       return true;
     }
@@ -184,12 +196,11 @@ export default class Lyticus {
   }
 
   stopHistoryMode() {
-    // TODO
-    console.warn("Stopping history mode is currently not supported");
+    console.warn("Stopping history mode is currently not supported"); // TODO
   }
 
   clickTracker() {
-    return event => {
+    return (event: any) => {
       const path = getEventPath(event) || [];
       for (let element of path) {
         const dataset = element.dataset;
@@ -203,9 +214,5 @@ export default class Lyticus {
 
   getEvents() {
     return this.state.events;
-  }
-
-  getVersion() {
-    return this.state.version;
   }
 }

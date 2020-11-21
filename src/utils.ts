@@ -1,4 +1,10 @@
-export function getEventPath(event) {
+import "url-search-params-polyfill";
+
+export function getEventPath(event: {
+  composedPath: () => any;
+  path: any;
+  target: any;
+}) {
   return (
     (event.composedPath && event.composedPath()) ||
     event.path ||
@@ -19,9 +25,7 @@ export function getEventPath(event) {
   );
 }
 
-import "url-search-params-polyfill";
-
-export function getUrlReferrer(window) {
+export function getUrlReferrer(window: Window) {
   const candidates = ["referrer", "ref", "source", "utm_source"];
   const queryParameters = new URLSearchParams(window.location.search);
   for (let i = 0; i < candidates.length; i++) {
@@ -34,32 +38,27 @@ export function getUrlReferrer(window) {
   return null;
 }
 
-export function isBodyLoaded(window) {
+export function isBodyLoaded(window: Window) {
   return !!window.document.body;
 }
 
-export function isDoNotTrack(window) {
-  return "doNotTrack" in window.navigator && window.navigator.doNotTrack == "1";
+export function isDoNotTrack(window: Window) {
+  return (
+    "doNotTrack" in window.navigator && window.navigator.doNotTrack === "1"
+  );
 }
 
-export function isExternalReferrer(window) {
+export function isExternalReferrer(window: Window) {
   const referrer = window.document.referrer;
   const origin = `${window.location.protocol}//${window.location.hostname}`;
   return !referrer.includes(origin);
 }
 
-export function isLocalhostReferrer(window) {
+export function isLocalhostReferrer(window: Window) {
   return /(^\w+:|^)\/\/localhost:/.test(window.document.referrer);
 }
 
-export function isVisibilityPrerendered(window) {
-  return (
-    "visibilityState" in window.document &&
-    window.document.visibilityState == "prerender"
-  );
-}
-
-export function sendToBeacon(data) {
+export function sendToBeacon(data: Record<string, unknown>) {
   const xhr = new XMLHttpRequest();
   xhr.open("POST", "https://beacon.lyticus.com/event");
   xhr.setRequestHeader("Content-Type", "application/json");
