@@ -185,9 +185,8 @@ export default class Lyticus {
       window.history.pushState = withEventDispatcher(window.history.pushState)(
         CustomEventType.PUSH_STATE_EVENT
       );
-      window.addEventListener(
-        CustomEventType.PUSH_STATE_EVENT,
-        () => this.trackPage
+      window.addEventListener(CustomEventType.PUSH_STATE_EVENT, () =>
+        this.trackPage()
       );
       this.trackPage();
       return true;
