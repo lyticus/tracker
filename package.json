@@ -2,7 +2,7 @@
   "name": "lyticus",
   "description": "Tracker library for Lyticus",
   "private": false,
-  "version": "1.0.37",
+  "version": "1.0.38",
   "author": "Bjorn Krols (https://byteboomers.com)",
   "license": "MIT",
   "keywords": [
