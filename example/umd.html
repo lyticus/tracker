@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Example (UMD)</title>
+    <script src="../dist/index.js"></script>
+  </head>
+  <body>
+    <script>
+      document.addEventListener("lyticus:configuration", (e) => {
+        console.log(e.detail);
+      });
+      var lyticus = new Lyticus("your-website-id", {
+        development: true,
+      });
+      document.addEventListener("lyticus:track", (e) => {
+        console.log(e.detail);
+      });
+      document.addEventListener("click", lyticus.clickTracker());
+      lyticus.trackNavigator();
+      lyticus.trackPage();
+      const historyModeStarted = lyticus.startHistoryMode();
+      console.log("History mode started:", historyModeStarted);
+      lyticus.stopHistoryMode();
+      console.log("History mode stopped");
+    </script>
+    <button onclick="lyticus.trackClick('buy-button')">Buy</button>
+    <button data-track-click="sell-button">Sell</button>
+  </body>
+</html>

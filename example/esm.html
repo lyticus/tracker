@@ -4,9 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Example</title>
-    <script src="../dist/index.js"></script>
-    <script>
+    <title>Example (ESM)</title>
+  </head>
+  <body>
+    <script type="module">
+      import Lyticus from "../dist/index.esm.js";
       document.addEventListener("lyticus:configuration", (e) => {
         console.log(e.detail);
       });
@@ -24,8 +26,6 @@
       lyticus.stopHistoryMode();
       console.log("History mode stopped");
     </script>
-  </head>
-  <body>
     <button onclick="lyticus.trackClick('buy-button')">Buy</button>
     <button data-track-click="sell-button">Sell</button>
   </body>
