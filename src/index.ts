@@ -29,7 +29,13 @@ import {
   PageViewEvent,
 } from "./types";
 
-const DEFAULT_OPTIONS = {
+declare global {
+  interface Window {
+    __LYTICUS__: State | undefined;
+  }
+}
+
+const DEFAULT_OPTIONS: Options = {
   cookies: true,
   development: false,
   getPath: () => window.location.pathname,
@@ -57,7 +63,6 @@ export default class Lyticus {
       ...DEFAULT_OPTIONS,
       ...options,
     };
-    // @ts-ignore
     window.__LYTICUS__ = this.state;
     dispatch(CustomEventType.CONFIGURATION_EVENT, this.state);
   }
@@ -106,7 +111,7 @@ export default class Lyticus {
           path: decoratedEvent.path,
         });
       }
-      saveSessionData(session); // Always save session data (bump expiry)
+      saveSessionData(session); // Always save session data (bumping the expiry of the session)
     }
     if (!this.options.development) {
       sendToBeacon(decoratedEvent);
