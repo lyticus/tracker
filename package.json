@@ -3,20 +3,20 @@
   "description": "Tracker library for Lyticus",
   "private": false,
   "version": "1.0.40",
-  "author": "Bjorn Krols (https://byteboomers.com)",
+  "author": "Bjorn Krols (https://lyticus.com)",
   "license": "MIT",
   "keywords": [
     "analytics",
     "lyticus",
     "tracking"
   ],
-  "homepage": "https://github.com/byteboomers/lyticus-tracker#readme",
+  "homepage": "https://github.com/lyticus/tracker#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/byteboomers/lyticus-tracker.git"
+    "url": "git+https://github.com/lyticus/tracker.git"
   },
   "bugs": {
-    "url": "https://github.com/byteboomers/lyticus-tracker/issues"
+    "url": "https://github.com/lyticus/tracker/issues"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
