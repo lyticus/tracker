@@ -2,7 +2,7 @@
   "name": "lyticus",
   "description": "Tracker library for Lyticus",
   "private": false,
-  "version": "1.0.40",
+  "version": "1.0.45",
   "author": "Bjorn Krols (https://lyticus.com)",
   "license": "MIT",
   "keywords": [
